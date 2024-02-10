@@ -1,0 +1,30 @@
+.input_data_row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  gap: 2rem;
+  margin-bottom: 1rem;
+}
+.input {
+  width: 7rem;
+  height: 20px;
+  border: 2px solid transparent;
+  outline: none;
+  border-bottom: 2px solid var(--background-color);
+  caret-color: var(--secondary-color);
+  background-color: var(--background-color);
+  padding: 5px;
+  transition: 0.5s linear;
+  letter-spacing: 1px;
+}
+
+.input:focus {
+  border: 2px solid var(--tertiary-color);
+  caret-color: var(--tertiary-color);
+  color: var(--tertiary-color);
+}
+
+.input:focus::placeholder {
+  color: var(--secondary-color);
+}
