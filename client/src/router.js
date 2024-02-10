@@ -21,7 +21,7 @@ const defaultHeaders = {
 
 const router = createBrowserRouter([
   {
-    element: <App />,
+    element: <App defaultHeaders={defaultHeaders} />,
 
     children: [
       {

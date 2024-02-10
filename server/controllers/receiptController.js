@@ -7,6 +7,7 @@ import Receipt from "../models/Receipt.js"; // Adjust the path as necessary
 const s3Client = new S3Client({ region: process.env.AWS_REGION });
 
 export const uploadReceipt = async (req, res) => {
+  console.log(req);
   if (!req.file) {
     return res.status(400).json({ message: "No file uploaded!" });
   }

@@ -5,7 +5,7 @@ import BottomBar from "./components/navigation/BottomBar";
 import { useSelector } from "react-redux";
 import { useEffect, useState } from "react";
 import { useLocation } from "react-router-dom";
-function App() {
+function App({ defaultHeaders }) {
   // const [isLoading, setIsLoading] = useState(false);
   // const dispatch = useDispatch();
   const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
@@ -16,8 +16,6 @@ function App() {
     location.pathname === "/donationMap" ||
     location.pathname === "/profile";
 
-  const [currUser, setCurrUser] = useState(null);
-
   return (
     <>
       {showNavBar ? (
@@ -27,7 +25,7 @@ function App() {
             <Outlet />
           </div>
           {/* {isAuthenticated && <BottomBar />} */}
-          <BottomBar />
+          <BottomBar defaultHeaders={defaultHeaders} />
         </div>
       ) : (
         <div className="App">

@@ -28,82 +28,82 @@ const Profile = ({ defaultHeaders }) => {
   // Array containing all Lottie animation data
   const animationData = [Ani1, Ani2, Ani3, Ani4, Ani5, Ani6, Ani7, Ani8, Ani9];
 
-  // useEffect(() => {
-  //   if (!isAuthenticated) {
-  //     navigate("/");
-  //   }
-  // }, [isAuthenticated, navigate]);
+  useEffect(() => {
+    if (!isAuthenticated) {
+      navigate("/");
+    }
+  }, [isAuthenticated, navigate]);
 
-  // useEffect(() => {
-  //   fetchUserData();
-  // }, []);
-  // const fetchUserData = async () => {
-  //   const res = await fetch("/api/users/profile", {
-  //     ...defaultHeaders,
-  //     method: "GET",
-  //   });
-  //   const user = await res.json();
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  const fetchUserData = async () => {
+    const res = await fetch("/api/users/profile", {
+      ...defaultHeaders,
+      method: "GET",
+    });
+    const user = await res.json();
 
-  //   const { _id, username, email } = user;
-  //   setUserData(user);
-  // };
+    const { _id, username, email } = user;
+    setUserData(user);
+  };
 
   const handleLogout = async () => {
     console.log("Logout");
-    // try {
-    //   const response = await fetch("/api/users/logout", {
-    //     method: "POST",
-    //     headers: defaultHeaders,
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error("Logout failed");
-    //   }
-    //   Cookies.remove("jwt");
-    //   dispatch(logout());
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
+    try {
+      const response = await fetch("/api/users/logout", {
+        method: "POST",
+        headers: defaultHeaders,
+      });
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+      Cookies.remove("jwt");
+      dispatch(logout());
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   const handleUpdateUser = async () => {
     console.log(userData, newPassword);
-    // try {
-    //   const res = await fetch("/api/users/profile", {
-    //     ...defaultHeaders,
-    //     method: "PUT",
-    //     body: JSON.stringify({
-    //       // userId: userData._id,
-    //       username: userData.username,
-    //       email: userData.email,
-    //       password: newPassword,
-    //     }),
-    //   });
-    //   if (!res.ok) {
-    //     throw new Error("Update failed");
-    //   }
-    //   const updatedUser = await res.json();
-    //   setUserData(updatedUser);
-    //   setUpdating(false);
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
+    try {
+      const res = await fetch("/api/users/profile", {
+        ...defaultHeaders,
+        method: "PUT",
+        body: JSON.stringify({
+          // userId: userData._id,
+          username: userData.username,
+          email: userData.email,
+          password: newPassword,
+        }),
+      });
+      if (!res.ok) {
+        throw new Error("Update failed");
+      }
+      const updatedUser = await res.json();
+      setUserData(updatedUser);
+      setUpdating(false);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   const handleRemoveUser = async () => {
     console.log("Remove user");
-    // try {
-    //   const res = await fetch("/api/users/profile", {
-    //     ...defaultHeaders,
-    //     method: "DELETE",
-    //   });
-    //   if (!res.ok) {
-    //     throw new Error("Delete failed");
-    //   }
+    try {
+      const res = await fetch("/api/users/profile", {
+        ...defaultHeaders,
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error("Delete failed");
+      }
 
-    //   Cookies.remove("jwt");
-    //   dispatch(logout());
-    //   navigate("/");
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
+      Cookies.remove("jwt");
+      dispatch(logout());
+      navigate("/");
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   return (
     <div className="profile_container">
