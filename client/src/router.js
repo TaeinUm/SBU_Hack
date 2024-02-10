@@ -8,7 +8,7 @@ import DonationMap from "./components/donation/DonationMap.js";
 import Login from "./components/login_register/Login.js";
 import Register from "./components/login_register/Register.js";
 import InputPage from "./components/input/InputPage.js";
-
+import Profile from "./components/profile/Profile.js";
 const token = Cookies.get("jwt");
 const defaultHeaders = {
   headers: {
@@ -23,10 +23,10 @@ const router = createBrowserRouter([
     element: <App />,
 
     children: [
-      {
-        path: "/",
-        element: <Login defaultHeaders={defaultHeaders} />,
-      },
+      // {
+      //   // path: "/",
+      //   element: <Login defaultHeaders={defaultHeaders} />,
+      // },
       {
         path: "/register",
         // path: "/",
@@ -42,15 +42,16 @@ const router = createBrowserRouter([
         // path: "/",
         element: <DonationMap defaultHeaders={defaultHeaders} />,
       },
+
       {
         path: "/input",
         // path: "/",
-        element: <DonationMap defaultHeaders={defaultHeaders}/>,
+        element: <InputPage defaultHeaders={defaultHeaders} />,
       },
       {
-        // path: "/input",
         path: "/",
-        element: <InputPage defaultHeaders={defaultHeaders} />,
+        // path: "/profile",
+        element: <Profile defaultHeaders={defaultHeaders} />,
       },
     ],
   },
