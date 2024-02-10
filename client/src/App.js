@@ -8,11 +8,13 @@ function App() {
 
   return (
     <>
-      <TopBar />
       <div className="App">
-        <Outlet />
+        <TopBar />
+        <div className="app_content">
+          <Outlet />
+        </div>
+        <BottomBar />
       </div>
-      <BottomBar />
     </>
   );
 }
