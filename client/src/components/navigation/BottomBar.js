@@ -1,44 +1,36 @@
 import * as React from 'react';
-import { useNavigate } from "react-router-dom"; // Import useNavigate
+import { useNavigate } from 'react-router-dom';
 import Box from '@mui/material/Box';
 import BottomNavigation from '@mui/material/BottomNavigation';
 import BottomNavigationAction from '@mui/material/BottomNavigationAction';
-import RestoreIcon from '@mui/icons-material/Restore'; // Assuming this is for the MainPage
-import FavoriteIcon from '@mui/icons-material/Favorite'; // Assuming this is for another page
-import LocationOnIcon from '@mui/icons-material/LocationOn'; // Assuming this is for DonationMap
+import RestoreIcon from '@mui/icons-material/Restore';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 export default function BottomBar() {
   const [value, setValue] = React.useState(0);
-  const navigate = useNavigate(); // Use the useNavigate hook
+  const navigate = useNavigate();
 
-  // Function to handle navigation
-  const handleNavigate = (newValue) => {
-    setValue(newValue);
-    switch (newValue) {
-      case 0:
-        navigate("/"); // Navigate to MainPage
-        break;
-      case 1:
-        navigate("/"); // Replace with your actual route
-        break;
-      case 2:
-        navigate("/donationMap"); // Navigate to DonationMap
-        break;
-      default:
-        break;
-    }
-  };
+  // Define navigation items
+  const navItems = [
+    { label: 'Main', icon: <RestoreIcon />, path: '/' },
+    { label: 'Favorites', icon: <FavoriteIcon />, path: '/' },
+    { label: 'Donation Map', icon: <LocationOnIcon />, path: '/donationMap' },
+  ];
 
   return (
     <Box sx={{ width: '100%', position: 'fixed', bottom: 0, left: 0, zIndex: 1000 }}>
       <BottomNavigation
         showLabels
         value={value}
-        onChange={(event, newValue) => handleNavigate(newValue)}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+          navigate(navItems[newValue].path);
+        }}
       >
-        <BottomNavigationAction label="Main" icon={<RestoreIcon />} />
-        <BottomNavigationAction label="Favorites" icon={<FavoriteIcon />} /> {/* Update label as needed */}
-        <BottomNavigationAction label="Donation Map" icon={<LocationOnIcon />} />
+        {navItems.map((item, index) => (
+          <BottomNavigationAction key={item.label} label={item.label} icon={item.icon} />
+        ))}
       </BottomNavigation>
     </Box>
   );
