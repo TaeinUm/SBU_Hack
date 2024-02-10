@@ -18,10 +18,12 @@ body {
 }
 .App {
   height: 100vh;
+
   display: flex;
   flex-direction: column;
   justify-content: space-between;
 }
 .app_content {
-  margin: 3rem;
+  margin: 2rem;
+  max-height: 80vh;
 }
