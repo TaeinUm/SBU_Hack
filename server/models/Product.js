@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const productSchema = new mongoose.Schema({
     index: Number,
@@ -7,6 +7,6 @@ const productSchema = new mongoose.Schema({
     donatable: Boolean
 });
 
-const Product = mongoose.model('Product', productSchema);
+const Product = mongoose.model('Product', productSchema, 'products');
 
-module.exports = Product;
+export default Product;

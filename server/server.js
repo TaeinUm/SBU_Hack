@@ -9,7 +9,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Importing routes
 import userRoutes from './routes/userRoutes.js';
-//import productRoutes from '.routes/productRoutes.js';
+import productRoutes from './routes/productRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -21,15 +21,20 @@ connectDB();
 const app = express();
 
 // Middlewares
-app.use(express.json()); // Equivalent to body-parser.json()
+app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Routes
 app.use('/api/users', userRoutes);
+app.use('/', productRoutes);
 
 app.get('/', (req, res) => {
-  res.send('Server is running');
+  res.send('Welcome to NaengJangGo!');
+});
+
+app.get('/api/products', (req, res) => {
+  res.send('Test route is working');
 });
 
 // Error handling middleware
