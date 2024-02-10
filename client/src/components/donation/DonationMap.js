@@ -168,7 +168,7 @@ const DonationMap = () => {
     return (
         <>
             {isLoading && <LoadingScreen />}
-            <div id="map" style={{ height: '100vh', width: '100%' }}></div>
+            <div id="map" style={{ height: '65vh', width: '100%' }}></div>
         </>
     );
 };
