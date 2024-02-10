@@ -1,9 +1,28 @@
 import asyncHandler from "express-async-handler";
 import User from "../models/User.js";
 import generateToken from "../utils/generateToken.js";
+import { uploadSingleImage } from "../utils/s3upload.js"; // Import the upload utility
+
 // @desc: Authenticate use and set token (Login User)
 // route: POST /api/users/auth
 // @access Public
+
+// New function to upload image
+export const uploadReceiptImage = async (req, res) => {
+  const userId = req.user._id; // Ensure this is provided by your auth middleware
+  const file = req.file; // Provided by multer-s3
+  if (!file) {
+    return res.status(400).json({ message: "No file uploaded!" });
+  }
+
+  try {
+    await User.findByIdAndUpdate(userId, { receipt: file.location });
+    res.status(200).json({ message: "Image uploaded successfully", receipt: file.location });
+  } catch (error) {
+    res.status(500).json({ message: "Failed to upload image", error: error.message });
+  }
+};
+
 const authUser = asyncHandler(async (req, res) => {
   const { email, password } = req.body;
   const user = await User.findOne({ email });

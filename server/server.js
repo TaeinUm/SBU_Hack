@@ -9,8 +9,6 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Importing routes
 import userRoutes from './routes/userRoutes.js';
-import productRoutes from './routes/productRoutes.js';
-import receiptRoutes from './routes/receiptRoutes.js';
 
 // Load environment variables
 dotenv.config();
@@ -28,15 +26,9 @@ app.use(cookieParser());
 
 // Routes
 app.use('/api/users', userRoutes);
-app.use('/', productRoutes);
-app.use('/api/receipts', receiptRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome to NaengJangGo!');
-});
-
-app.get('/api/products', (req, res) => {
-  res.send('Test route is working');
 });
 
 // Error handling middleware
