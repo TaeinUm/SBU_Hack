@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./index.css";
 import App from "./App.js";
 import MainPage from "./components/mainpage/MainPage";
@@ -9,6 +9,7 @@ import Login from "./components/login_register/Login.js";
 import Register from "./components/login_register/Register.js";
 import InputPage from "./components/input/InputPage.js";
 import Profile from "./components/profile/Profile.js";
+
 const token = Cookies.get("jwt");
 const defaultHeaders = {
   headers: {
@@ -17,11 +18,10 @@ const defaultHeaders = {
     Authorization: `Bearer ${token}`,
   },
 };
-console.log(token);
 
 const router = createBrowserRouter([
   {
-    element: <App />,
+    element: <App defaultHeaders={defaultHeaders} />,
 
     children: [
       {

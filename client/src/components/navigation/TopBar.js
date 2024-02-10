@@ -29,7 +29,7 @@ const TopBar = () => {
         <button
           className="profile-button"
           onClick={() => {
-            navigate("/");
+            navigate("/profile");
           }}
         >
           <i className="bi bi-person"></i>
@@ -41,7 +41,7 @@ const TopBar = () => {
   return (
     <div className="top-bar">
       <Logo />
-      {isAuthenticated && <ProfileButton />}
+      <ProfileButton />
     </div>
   );
 };
