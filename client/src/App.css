@@ -10,7 +10,7 @@
   --font-color-light: #2c2d1e;
   /* --font-color: #050924; */
   --font-color: #07102c;
-  --textaree-color: #add8e6;
+  --textarea-color: #add8e6;
 
   --font-color-dark: #123749;
   --font-color-light: #7e929b;
@@ -21,16 +21,16 @@
   --secondary-main-color: #517d74;
   /* #97c095a3; */
   --primary-bg-color: #acd0fc;
-  --secondary-bg-color: #c8defe;
+  --secondary-bg-color: #c8defeb0;
 
   --tree-color: #86bf3c;
   --dark-tree-color: #3a4517;
-  --trunk-color: #544321;
+  --trunk-color: #544321c4;
 }
 body {
   height: 100vh;
   width: 100vw;
-  background-color: whitesmoke;
+  background-color: rgb(238, 238, 234);
   align-items: center;
 }
 .App {
@@ -40,8 +40,8 @@ body {
   /* justify-content: space-between; */
 }
 .app_content {
-  margin: 2rem;
-  height: 70vh;
+  margin: 0 2rem;
+  /* height: 70vh; */
   overflow-y: scroll;
 }
 /* input blue, sub background - yellow, main background - green, button - green  */
