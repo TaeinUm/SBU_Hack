@@ -19,11 +19,30 @@ const authUser = asyncHandler(async (req, res) => {
   }
   // res.status(200).json({ message: "Auth User" });
 });
+
+// Password validation function
+const validatePassword = (password) => {
+  // Criteria:
+  // - At least 8 characters long
+  // - Contains at least one letter
+  // - Contains at least one number
+  // - Contains at least one special character
+  const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  return regex.test(password);
+};
+
 // @desc: Register a new user with credentials
 // route: POST /api/users/register
 // @access Public
 const registerUser = asyncHandler(async (req, res) => {
   const { username, email, password } = req.body;
+
+  // Password validation
+  if (!validatePassword(password)) {
+    res.status(400);
+    throw new Error("Password does not meet the requirements.");
+  }
+  
   // Check if a user already exists
   const userExists = await User.findOne({ email });
   // If user exists, throw an error
@@ -74,6 +93,11 @@ const updateUser = asyncHandler(async (req, res) => {
     user.username = req.body.username || user.username;
     user.email = req.body.email || user.email;
     if (req.body.password) {
+      // Password validation
+      if (!validatePassword(req.body.password)) {
+        res.status(400);
+        throw new Error("Password does not meet the requirements.");
+      }
       user.password = req.body.password;
     }
     const updatedUser = await user.save();

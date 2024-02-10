@@ -23,10 +23,10 @@ const router = createBrowserRouter([
     element: <App />,
 
     children: [
-      // {
-      //   // path: "/",
-      //   element: <Login defaultHeaders={defaultHeaders} />,
-      // },
+      {
+        path: "/",
+        element: <Login defaultHeaders={defaultHeaders} />,
+      },
       {
         path: "/register",
         // path: "/",
@@ -49,8 +49,8 @@ const router = createBrowserRouter([
         element: <InputPage defaultHeaders={defaultHeaders} />,
       },
       {
-        path: "/",
-        // path: "/profile",
+        // path: "/",
+        path: "/profile",
         element: <Profile defaultHeaders={defaultHeaders} />,
       },
     ],

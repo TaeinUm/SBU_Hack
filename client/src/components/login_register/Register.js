@@ -54,13 +54,13 @@ const Register = ({ defaultHeaders }) => {
     navigate("/main");
   };
   return (
-    <form className="form" onSubmit={handleRegister}>
-      <div className="title">
+    <form className="register_form" onSubmit={handleRegister}>
+      <div className="register_title">
         Sign Up <br />
         <span>Just one step away from making a differnce,</span>
       </div>
       <input
-        className="input"
+        className="register_input"
         name="username"
         placeholder="Username"
         type="text"
@@ -69,7 +69,7 @@ const Register = ({ defaultHeaders }) => {
         required
       />
       <input
-        className="input"
+        className="register_input"
         name="email"
         placeholder="Email"
         type="email"
@@ -78,7 +78,7 @@ const Register = ({ defaultHeaders }) => {
         required
       />
       <input
-        className="input"
+        className="register_input"
         name="password"
         placeholder="Password"
         type="password"
@@ -87,7 +87,7 @@ const Register = ({ defaultHeaders }) => {
         required
       />
       <input
-        className="input"
+        className="register_input"
         name="password"
         placeholder="Confirm Password"
         type="password"

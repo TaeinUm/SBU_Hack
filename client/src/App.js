@@ -2,9 +2,11 @@ import "./App.css";
 import { Outlet } from "react-router-dom";
 import TopBar from "./components/navigation/TopBar";
 import BottomBar from "./components/navigation/BottomBar";
+import { useSelector } from "react-redux";
 function App() {
   // const [isLoading, setIsLoading] = useState(false);
   // const dispatch = useDispatch();
+  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
 
   return (
     <>
@@ -13,7 +15,7 @@ function App() {
         <div className="app_content">
           <Outlet />
         </div>
-        <BottomBar />
+        {isAuthenticated && <BottomBar />}
       </div>
     </>
   );
