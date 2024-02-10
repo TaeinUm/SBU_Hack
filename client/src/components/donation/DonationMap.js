@@ -1,9 +1,23 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import LoadingScreen from '../loading/LoadingScreen';
+import Modal from '../../utils/Modal';
+import BankModal from '../../utils/Modal2';
+
 
 const DonationMap = () => {
     const [userLocation, setUserLocation] = useState({ lat: -34.397, lng: 150.644 });
     const [isLoading, setIsLoading] = useState(true);
+
+    // Ref for the bottom sheet
+    const bottomSheetRef = useRef(null);
+
+    // Snap points for the bottom sheet
+    const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+    // Handler to expand the bottom sheet
+    const handleExpandPress = useCallback(() => {
+        bottomSheetRef.current?.expand();
+    }, []);
 
     useEffect(() => {
         window.initMap = () => {
@@ -85,7 +99,13 @@ const DonationMap = () => {
             {isLoading ? (
                 <LoadingScreen />
             ) : (
-                <div id="map" style={{ height: '65vh', width: '100%', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121'}}></div>
+                <>
+                    <div id="map" style={{ height: '65vh', width: '100%', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121', marginTop: '-20px'}}></div>
+                    <div id="ScrollViewContainer" style={{height: '30px', width: '100%', marginTop: "25px", display: "flex", justifyContent: 'space-between'}}>
+                        <BankModal/>
+                        <Modal/>
+                    </div>
+                </>
             )}
         </>
     );
