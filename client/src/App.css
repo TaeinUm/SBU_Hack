@@ -1,13 +1,15 @@
 :root {
   /* --main-color: #5db95f79; */
-  --main-color: #97c095a3;
+  --main-color: #99b79772;
   --secondary-color: #36943c;
   --tertiary-color: #00701b;
-  --background-color: #f6edd9;
+  /* --background-color: #f6edd9d4; */
+  --background-color: #f6edd945;
   --primary-dark-color: #8d8d6a;
   --secondary-dark-color: #595d2a;
   --font-color-light: #2c2d1e;
-  --font-color: #001e00;
+  /* --font-color: #050924; */
+  --font-color: #07102c;
   --textaree-color: #add8e6;
 }
 body {
@@ -24,8 +26,7 @@ body {
 }
 .app_content {
   margin: 2rem;
-  /* max-height: 80vh; */
-  /* width: 80vw; */
-  /* overflow-y: scroll; */
+  height: 70vh;
+  overflow-y: scroll;
 }
 /* input blue, sub background - yellow, main background - green, button - green  */
