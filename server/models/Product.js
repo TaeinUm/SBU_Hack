@@ -1,9 +1,9 @@
 const mongoose = require('mongoose');
 
 const productSchema = new mongoose.Schema({
-    name: String,
+    index: Number,
+    productName: String,
     expdate: Date,
-    expimg: String,
     donatable: Boolean
 });
 
