@@ -17,6 +17,7 @@ const defaultHeaders = {
     Authorization: `Bearer ${token}`,
   },
 };
+console.log(token);
 
 const router = createBrowserRouter([
   {

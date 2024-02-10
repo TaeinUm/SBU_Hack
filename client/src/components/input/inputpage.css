@@ -17,10 +17,9 @@
   box-shadow: 4px 4px black;
 }
 .input_page h2 {
-  font-weight: 700;
+  font-weight: 400;
   text-align: center;
   margin-top: 0;
-  color: var(--trunk-color);
 }
 .inputpage_header {
   display: flex;

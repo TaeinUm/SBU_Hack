@@ -6,8 +6,8 @@ import React, {
   useCallback,
 } from "react";
 import LoadingScreen from "./LoadingScreen";
-import Modal from "../../utils/Modal";
-import BankModal from "../../utils/Modal2";
+import Modal from "../../utils/Modal.js";
+import BankModal from "../../utils/Modal2.js";
 
 const DonationMap = () => {
   const [userLocation, setUserLocation] = useState({
