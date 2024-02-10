@@ -1,7 +1,10 @@
-const express = require('express');
+import express from 'express';
+import multer from 'multer';
+import { uploadReceipt } from '../controllers/receiptController.js';
+
+const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
-const receiptController = require('../controller/receiptController');
 
-router.post('/receipts', receiptController.uploadReceipt);
+router.post('/', upload.single('img'), uploadReceipt);
 
-module.exports = router;
+export default router;

@@ -1,43 +1,46 @@
-const AWS = require('aws-sdk');
-const multer = require('multer');
-const multerS3 = require('multer-s3');
-const Receipt = require('../models/Receipt'); // Adjust the path as necessary
+// Import necessary AWS SDK v3 modules
+import { S3Client, PutObjectCommand } from "@aws-sdk/client-s3";
+import { Upload } from "@aws-sdk/lib-storage";
+import Receipt from "../models/Receipt.js"; // Adjust the path as necessary
 
+// Initialize the S3 Client with your region
+const s3Client = new S3Client({ region: process.env.AWS_REGION });
 
-// Configure AWS
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
-  region: process.env.AWS_REGION,
-});
+export const uploadReceipt = async (req, res) => {
+    if (!req.file) {
+        return res.status(400).json({ message: "No file uploaded!" });
+    }
 
-const s3 = new AWS.S3();
+    try {
+        // Generate a unique filename for the S3 bucket
+        const fileName = `${Date.now()}_${req.file.originalname}`;
+        const bucketName = process.env.AWS_S3_BUCKET;
 
-// Set up multer to upload the image to S3
-const upload = multer({
-    storage: multerS3({
-        s3: s3,
-        bucket: process.env.AWS_BUCKET_NAME,
-        acl: 'public-read', // adjust this according to your needs
-        key: function (req, file, cb) {
-            cb(null, Date.now().toString()); // Use Date.now() to name the file uniquely
-        }
-    })
-}).single('img'); // 'img' is the name of the file input field
-
-// Upload image to S3 and save the reference in MongoDB
-exports.uploadReceipt = (req, res) => {
-    upload(req, res, function (error) {
-        if (error) {
-            return res.status(500).json({ message: error.message });
-        }
-        // File uploaded successfully
-        const newReceipt = new Receipt({
-            img: req.file.location // req.file.location contains the URL of the file in S3
+        // Create an instance of Upload class to manage multipart upload
+        const parallelUploads3 = new Upload({
+            client: s3Client,
+            params: {
+                Bucket: bucketName,
+                Key: fileName,
+                Body: req.file.buffer, // Assuming you're using memory storage in multer
+            },
         });
 
-        newReceipt.save()
-            .then(receipt => res.status(201).json(receipt))
-            .catch(err => res.status(400).json({ message: err.message }));
-    });
+        // Upload the file to S3
+        const result = await parallelUploads3.done();
+
+        // Create a new Receipt document with the S3 file URL
+        const newReceipt = new Receipt({
+            img: result.Location, // URL of the uploaded file
+        });
+
+        // Save the Receipt document in MongoDB
+        await newReceipt.save();
+
+        // Send the response
+        res.status(201).json({ message: "File uploaded successfully", receipt: newReceipt });
+    } catch (error) {
+        console.error("Error uploading file: ", error);
+        res.status(500).json({ message: "Error uploading file to S3", error: error.message });
+    }
 };

@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+import mongoose from 'mongoose';
 
 const receiptSchema = new mongoose.Schema({
     img: String
@@ -6,4 +6,4 @@ const receiptSchema = new mongoose.Schema({
 
 const Receipt = mongoose.model('Receipt', receiptSchema);
 
-module.exports = Receipt;
+export default Receipt;

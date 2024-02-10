@@ -5,6 +5,10 @@
     "server": "nodemon server.js"
   },
   "dependencies": {
+    "@aws-sdk/client-s3": "^3.511.0",
+    "@aws-sdk/lib-storage": "^3.511.0",
+    "@aws-sdk/middleware-sdk-s3": "^3.511.0",
+    "@aws-sdk/s3-request-presigner": "^3.511.0",
     "aws-sdk": "^2.1555.0",
     "bcrypt": "^5.1.1",
     "bcryptjs": "^2.4.3",
@@ -14,7 +18,9 @@
     "express-async-handler": "^1.2.0",
     "jsonwebtoken": "^9.0.2",
     "mongodb": "^6.3.0",
-    "mongoose": "^8.1.1"
+    "mongoose": "^8.1.1",
+    "multer": "^1.4.5-lts.1",
+    "multer-s3": "^3.0.1"
   },
   "devDependencies": {
     "nodemon": "^3.0.3"
