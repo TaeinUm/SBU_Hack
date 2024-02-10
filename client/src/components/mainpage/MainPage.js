@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useEffect } from "react";
 import "./mainpage.css";
-
+import Cookies from "js-cookie";
 const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
   return (
     <>
@@ -19,6 +19,9 @@ const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
 };
 
 const Checklist = () => {
+  const token = Cookies.get("jwt");
+  console.log(token);
+
   const items = [
     {
       index: "01",

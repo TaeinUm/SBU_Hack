@@ -35,6 +35,7 @@ const Login = ({ defaultHeaders }) => {
     }
 
     const user = await res.json();
+
     dispatch(setCredentials(user));
     navigate("/main");
   };
