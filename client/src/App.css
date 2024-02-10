@@ -11,6 +11,21 @@
   /* --font-color: #050924; */
   --font-color: #07102c;
   --textaree-color: #add8e6;
+
+  --font-color-dark: #123749;
+  --font-color-light: #7e929b;
+  --light-color: #f4f4f4;
+
+  /* FINAL COLOR */
+  --primary-main-color: #7cc999;
+  --secondary-main-color: #517d74;
+
+  --primary-bg-color: #acd0fc;
+  --secondary-bg-color: #c8defe;
+
+  --tree-color: #86bf3c;
+  --dark-tree-color: #3a4517;
+  --trunk-color: #544321;
 }
 body {
   height: 100vh;
