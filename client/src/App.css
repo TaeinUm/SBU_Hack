@@ -18,12 +18,14 @@ body {
 }
 .App {
   height: 100vh;
-
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  /* justify-content: space-between; */
 }
 .app_content {
   margin: 2rem;
-  max-height: 80vh;
+  /* max-height: 80vh; */
+  /* width: 80vw; */
+  /* overflow-y: scroll; */
 }
+/* input blue, sub background - yellow, main background - green, button - green  */
