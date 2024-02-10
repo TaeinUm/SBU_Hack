@@ -5,6 +5,7 @@ import LoginRegister from "./components/login_register/LoginRegister";
 import MainPage from "./components/mainpage/MainPage";
 import { createBrowserRouter } from "react-router-dom";
 import Cookies from "js-cookie";
+import DonationMap from "./components/donation/DonationMap.js";
 
 const token = Cookies.get("jwt");
 const defaultHeaders = {
@@ -28,6 +29,11 @@ const router = createBrowserRouter([
         path: "/main",
         element: <MainPage defaultHeaders={defaultHeaders} />,
       },
+      {
+        path: "/donationMap",
+        element: <DonationMap defaultHeaders={defaultHeaders}/>,
+      }
+
     ],
   },
 ]);
