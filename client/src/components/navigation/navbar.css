@@ -76,6 +76,7 @@
   height: 80px;
 }
 .tab {
+  position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -90,9 +91,14 @@
   transition: all 0.3s;
   margin: 0.3rem 1rem;
 }
-/* .tab .active: {
-  background-color: red;
-} */
+
 .tab:hover {
   background-color: var(--background-color);
+}
+::file-selector-button {
+  display: none;
+}
+input[type="file"] {
+  color: rgba(0, 0, 0, 0);
+  position: ;
 }
