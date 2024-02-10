@@ -23,12 +23,13 @@ const router = createBrowserRouter([
     element: <App />,
 
     children: [
-      // {
-      //   path: "/",
-      //   element: <Login defaultHeaders={defaultHeaders} />,
-      // },
+      {
+        path: "/",
+        element: <Login defaultHeaders={defaultHeaders} />,
+      },
       {
         path: "/register",
+        // path: "/",
         element: <Register defaultHeaders={defaultHeaders} />,
       },
       {
@@ -38,11 +39,12 @@ const router = createBrowserRouter([
       },
       {
         path: "/donationMap",
-        element: <DonationMap defaultHeaders={defaultHeaders}/>,
-      }
-,{
-        // path: "/input",
-        path: "/",
+        // path: "/",
+        element: <DonationMap defaultHeaders={defaultHeaders} />,
+      },
+      {
+        path: "/input",
+        // path: "/",
         element: <InputPage defaultHeaders={defaultHeaders} />,
       },
     ],
