@@ -17,9 +17,9 @@
   --light-color: #f4f4f4;
 
   /* FINAL COLOR */
-  --primary-main-color: #7cc999;
+  --primary-main-color: #99b79772;
   --secondary-main-color: #517d74;
-
+  /* #97c095a3; */
   --primary-bg-color: #acd0fc;
   --secondary-bg-color: #c8defe;
 
@@ -30,7 +30,7 @@
 body {
   height: 100vh;
   width: 100vw;
-  background-color: var(--main-color);
+  background-color: whitesmoke;
   align-items: center;
 }
 .App {
