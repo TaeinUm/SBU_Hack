@@ -1,8 +1,8 @@
 import Product from '../models/Product.js';
 
 export const updateInfo = async (req, res) => {
-    const { id } = req.params; // Extract the product ID from URL parameters
-    const { productName, expdate, donatable } = req.body; // Extract values from the request body
+    const { id } = req.params;
+    const { productName, expdate, donatable } = req.body;
 
     // Build an update object, only including fields that were provided
     let updateFields = {
