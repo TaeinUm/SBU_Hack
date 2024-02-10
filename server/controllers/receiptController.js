@@ -13,7 +13,7 @@ export const uploadReceipt = async (req, res) => {
 
     try {
         // Generate a unique filename for the S3 bucket
-        const fileName = `${Date.now()}_${req.file.originalname}`;
+        const fileName = `productImg/${Date.now()}_${req.file.originalname}`;
         const bucketName = process.env.AWS_S3_BUCKET;
 
         // Create an instance of Upload class to manage multipart upload
