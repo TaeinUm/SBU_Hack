@@ -9,6 +9,7 @@ import { notFound, errorHandler } from './middleware/errorMiddleware.js';
 
 // Importing routes
 import userRoutes from './routes/userRoutes.js';
+//import productRoutes from '.routes/productRoutes.js';
 
 // Load environment variables
 dotenv.config();
