@@ -28,11 +28,11 @@ const Profile = ({ defaultHeaders }) => {
   // Array containing all Lottie animation data
   const animationData = [Ani1, Ani2, Ani3, Ani4, Ani5, Ani6, Ani7, Ani8, Ani9];
 
-  useEffect(() => {
-    if (!isAuthenticated) {
-      navigate("/");
-    }
-  }, [isAuthenticated, navigate]);
+  // useEffect(() => {
+  //   if (!isAuthenticated) {
+  //     navigate("/");
+  //   }
+  // }, [isAuthenticated, navigate]);
 
   // useEffect(() => {
   //   fetchUserData();
@@ -176,12 +176,15 @@ const Profile = ({ defaultHeaders }) => {
               <br />
               <span>email@email.com</span>
             </p>
-            <CustomBtn text={"Update User Info"} onClick={handleUpdateUser} />
-            <CustomBtn text={"Remove Account"} onClick={handleRemoveUser} />
+            <br />
+            <div className="updatebtn_container">
+              <CustomBtn text={"Update User Info"} onClick={handleUpdateUser} />
+              <CustomBtn text={"Remove Account"} onClick={handleRemoveUser} />
+              <CustomBtn text={"Logout"} onClick={handleLogout} />
+            </div>
           </>
         )}
       </div>
-      <CustomBtn text={"Logout"} onClick={handleLogout} />
     </div>
   );
 };
