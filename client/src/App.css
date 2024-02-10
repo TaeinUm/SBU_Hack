@@ -1,4 +1,12 @@
 :root {
+  --maincolor: #5db95e;
+  --secondary-color: #36943c;
+  --tertiary-color: #009f9a;
+  --background-color: #00701b;
+  --primary-dark-color: #8d8d6a;
+  --secondary-dark-color: #595d2a;
+  --font-color-light: #2c2d1e;
+  --font-color: #001e00;
 }
 body {
   height: 100vh;

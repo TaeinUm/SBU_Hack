@@ -1,19 +1,18 @@
-import { useState } from "react";
 import "./App.css";
-
 import { Outlet } from "react-router-dom";
-import { useDispatch } from "react-redux";
-
+import TopBar from "./components/navigation/TopBar";
+import BottomBar from "./components/navigation/BottomBar";
 function App() {
   // const [isLoading, setIsLoading] = useState(false);
   // const dispatch = useDispatch();
 
   return (
     <>
-      <div>Welcome</div>
+      <TopBar />
       <div className="App">
         <Outlet />
       </div>
+      <BottomBar />
     </>
   );
 }
