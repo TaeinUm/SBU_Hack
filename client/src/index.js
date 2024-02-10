@@ -11,6 +11,7 @@ import store from "./store/index.js";
 
 import { ThemeProvider } from '@mui/material/styles';
 import theme from './utils/theme.js'; // Import the theme
+import "bootstrap-icons/font/bootstrap-icons.css";
 
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
