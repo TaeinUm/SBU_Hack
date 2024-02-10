@@ -45,6 +45,11 @@ const router = createBrowserRouter([
       {
         path: "/input",
         // path: "/",
+        element: <DonationMap defaultHeaders={defaultHeaders}/>,
+      },
+      {
+        // path: "/input",
+        path: "/",
         element: <InputPage defaultHeaders={defaultHeaders} />,
       },
     ],
