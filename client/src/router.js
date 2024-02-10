@@ -5,6 +5,8 @@ import LoginRegister from "./components/login_register/LoginRegister";
 import MainPage from "./components/mainpage/MainPage";
 import { createBrowserRouter } from "react-router-dom";
 import Cookies from "js-cookie";
+import Login from "./components/login_register/Login.js";
+import Register from "./components/login_register/Register.js";
 
 const token = Cookies.get("jwt");
 const defaultHeaders = {
@@ -22,7 +24,11 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <LoginRegister defaultHeaders={defaultHeaders} />,
+        element: <Login defaultHeaders={defaultHeaders} />,
+      },
+      {
+        path: "/register",
+        element: <Register defaultHeaders={defaultHeaders} />,
       },
       {
         path: "/main",
