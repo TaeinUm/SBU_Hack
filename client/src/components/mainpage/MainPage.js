@@ -46,7 +46,6 @@ const MainPage = ({ defaultHeaders }) => {
           method: "GET",
           headers: {
             ...defaultHeaders,
-            Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         });
         if (!res.ok) {

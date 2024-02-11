@@ -1,9 +1,9 @@
 import User from "../models/User.js";
 
 export const updateProductInfo = async (req, res) => {
-  const { userId, productId } = req.params; // Use productId instead of productIndex
-  const { productName, expdate, donatable } = req.body;
-
+  const { userId, productId } = req.params;
+  const updates = req.body; // Assuming this contains the modifications to the product
+  console.log(updates);
   try {
     // Find the user and the product by ID
     const user = await User.findById(userId);
@@ -12,15 +12,20 @@ export const updateProductInfo = async (req, res) => {
     }
 
     // Find the specific product to update
-    const product = user.products.id(productId); // Mongoose's id method to find a subdocument by its _id
+    const product = user.products.id(productId);
     if (!product) {
       return res.status(404).json({ message: "Product not found" });
     }
 
-    // Update the product information
-    if (productName !== undefined) product.productName = productName;
-    if (expdate !== undefined) product.expdate = expdate;
-    if (donatable !== undefined) product.donatable = donatable;
+    // Update the product information dynamically
+    for (const [key, value] of Object.entries(updates)) {
+      if (key === "expdate" && value) {
+        // Ensure expdate is converted from string to Date type
+        product[key] = new Date(value);
+      } else {
+        product[key] = value;
+      }
+    }
 
     // Save the user document with updated product information
     await user.save();
@@ -58,9 +63,8 @@ export const deleteProduct = async (req, res) => {
 
 // Get all the products
 export const getUserProducts = async (req, res) => {
-  console.log(req.params.userId);
   try {
-    const userId = req.params.userId; // Or however you're passing the user's ID
+    const userId = req.params.userId;
     const user = await User.findById(userId).exec();
 
     if (!user) {

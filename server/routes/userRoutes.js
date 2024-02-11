@@ -6,34 +6,42 @@ import {
   getUser,
   updateUser,
   deleteUser,
+  uploadReceiptImage,
 } from "../controllers/userController.js";
-import { 
+
+import {
   updateProductInfo,
   deleteProduct,
   getUserProducts,
 } from "../controllers/productController.js";
+
 import { protect } from "../middleware/authMiddleware.js";
-import { uploadReceiptImage } from "../controllers/userController.js";
 import { uploadSingleImage } from "../utils/s3upload.js";
 
 const router = express.Router();
 
+// Authentication routes
 router.post("/auth", authUser);
 router.post("/register", registerUser);
 router.post("/logout", logoutUser);
-// router.get("/profile", getUser);
-// router.put("/profile", updateUser);
+
+// User profile management
 router
   .route("/profile")
   .get(protect, getUser)
   .put(protect, updateUser)
   .delete(protect, deleteUser);
 
+// Image upload
 router.post("/upload", protect, uploadSingleImage, uploadReceiptImage);
 
-// Routes for managing products within a user document
-router.put('/:userId/products/:productId', protect, updateProductInfo); // Update a specific product of a user
-router.delete('/:userId/products/:productId', protect, deleteProduct); // Delete a specific product from a user
-router.get('/:userId/products', getUserProducts); // Get all the products
+// Product management within a user document
+router.route("/:userId/products").get(getUserProducts); // Get all products for a user
+
+router
+  .route("/:userId/products/:productId") // Update a specific product
+  .delete(protect, deleteProduct); // Delete a specific product
+router.route("/:userId/products").put(protect, updateProductInfo); // Update a specific product
+// Delete a specific product
 
 export default router;

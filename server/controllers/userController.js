@@ -101,7 +101,6 @@ const logoutUser = asyncHandler(async (req, res) => {
 // route: Get /api/users/profile[id]
 // @access protected - need a vaild json webtoken
 const getUser = asyncHandler(async (req, res) => {
-  console.log(req.user);
   const user = {
     _id: req.user._id,
     username: req.user.username,
