@@ -3,7 +3,7 @@ import "./inputpage.css";
 import CustomInput from "./CustomInput";
 import CustomBtn from "../profile/CustomBtn";
 
-const InputPage = () => {
+const InputPage = ({ isAuthenticated }) => {
   const [items, setItems] = useState([
     {
       index: "01",

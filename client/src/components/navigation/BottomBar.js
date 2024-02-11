@@ -23,13 +23,13 @@ const BottomBar = ({ defaultHeaders }) => {
     }
 
     const formData = new FormData();
-    console.log(file);
+    // console.log(file);
     formData.append("file", file);
-    console.log(formData.get("file"));
+    // console.log(formData.get("file"));
     try {
-      const response = await fetch("/api/user/update/", {
+      const response = await fetch("/api/users/upload", {
         headers: {
-          ...defaultHeaders, // Assuming you have existing headers
+          ...defaultHeaders,
           "Content-Type": "multipart/form-data",
         },
         method: "POST",

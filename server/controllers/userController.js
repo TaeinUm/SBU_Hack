@@ -10,16 +10,20 @@ import { uploadSingleImage } from "../utils/s3upload.js"; // Import the upload u
 // New function to upload image
 export const uploadReceiptImage = async (req, res) => {
   const userId = req.user._id; // Ensure this is provided by your auth middleware
-  const file = req.file; // Provided by multer-s3
+  const file = req; // Provided by multer-s3
   if (!file) {
     return res.status(400).json({ message: "No file uploaded!" });
   }
 
   try {
     await User.findByIdAndUpdate(userId, { receipt: file.location });
-    res.status(200).json({ message: "Image uploaded successfully", receipt: file.location });
+    res
+      .status(200)
+      .json({ message: "Image uploaded successfully", receipt: file.location });
   } catch (error) {
-    res.status(500).json({ message: "Failed to upload image", error: error.message });
+    res
+      .status(500)
+      .json({ message: "Failed to upload image", error: error.message });
   }
 };
 
@@ -28,6 +32,7 @@ const authUser = asyncHandler(async (req, res) => {
   const user = await User.findOne({ email });
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id);
+    console.log(res, res.cookie);
     res
       .status(201)
       .json({ _id: user._id, username: user.username, email: user.email });
@@ -46,7 +51,8 @@ const validatePassword = (password) => {
   // - Contains at least one letter
   // - Contains at least one number
   // - Contains at least one special character
-  const regex = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  const regex =
+    /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   return regex.test(password);
 };
 
@@ -61,7 +67,7 @@ const registerUser = asyncHandler(async (req, res) => {
     res.status(400);
     throw new Error("Password does not meet the requirements.");
   }
-  
+
   // Check if a user already exists
   const userExists = await User.findOne({ email });
   // If user exists, throw an error

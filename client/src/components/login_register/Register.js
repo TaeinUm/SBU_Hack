@@ -5,7 +5,7 @@ import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/auth.js";
 import "./register.css";
 
-const Register = ({ defaultHeaders }) => {
+const Register = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 

@@ -1,6 +1,7 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./mainpage.css";
-import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+
 const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
   return (
     <>
@@ -18,9 +19,9 @@ const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
   );
 };
 
-const Checklist = () => {
-  const token = Cookies.get("jwt");
-  console.log(token);
+const MainPage = () => {
+  const [auth, setAuth] = useState(false);
+  const isAuthenticated = localStorage.getItem("isAuthenticated") !== null;
 
   const items = [
     {
@@ -124,4 +125,4 @@ const Checklist = () => {
   );
 };
 
-export default Checklist;
+export default MainPage;
