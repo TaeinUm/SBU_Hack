@@ -1,38 +1,37 @@
 import User from "../models/User.js";
 
 export const updateProductInfo = async (req, res) => {
-  const { userId, productId } = req.params;
-  const updates = req.body; // Assuming this contains the modifications to the product
-  console.log(updates);
+  const { userId } = req.params;
+  const productsUpdates = req.body; // This should be an array of product updates
+
   try {
-    // Find the user and the product by ID
-    const user = await User.findById(userId);
-    if (!user) {
-      return res.status(404).json({ message: "User not found" });
-    }
-
-    // Find the specific product to update
-    const product = user.products.id(productId);
-    if (!product) {
-      return res.status(404).json({ message: "Product not found" });
-    }
-
-    // Update the product information dynamically
-    for (const [key, value] of Object.entries(updates)) {
-      if (key === "expdate" && value) {
-        // Ensure expdate is converted from string to Date type
-        product[key] = new Date(value);
-      } else {
-        product[key] = value;
+      const user = await User.findById(userId);
+      if (!user) {
+          return res.status(404).json({ message: "User not found" });
       }
-    }
 
-    // Save the user document with updated product information
-    await user.save();
-    res.status(200).json(product);
+      // Iterate over each product update request
+      productsUpdates.forEach(update => {
+          // Assuming each update object contains an identifier `_id` to find the product
+          const product = user.products.id(update._id);
+          if (product) {
+              // Apply the updates to the product
+              Object.entries(update).forEach(([key, value]) => {
+                  if (key === "expdate" && value) {
+                      // Convert expdate from string to Date type
+                      product[key] = new Date(value);
+                  } else if (key !== "_id") { // Avoid attempting to update the _id field
+                      product[key] = value;
+                  }
+              });
+          }
+      });
+
+      await user.save();
+      res.status(200).json({ message: "Products updated successfully" });
   } catch (error) {
-    console.error(error);
-    res.status(400).json({ message: error.message });
+      console.error(error);
+      res.status(400).json({ message: error.message });
   }
 };
 
