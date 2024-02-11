@@ -11,7 +11,7 @@
     "install:client": "cd client && npm install",
     "install:server": "cd server && npm install",
     "build:client": "cd client && npm run build",
-    "heroku-postbuild": "npm run install:client && npm run build:client"
+    "heroku-postbuild": "cd client && npm install && npm run build"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.511.0",
