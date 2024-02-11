@@ -21,7 +21,9 @@ function App({ defaultHeaders }) {
         {isLoggedIn ? (
           <BottomBar defaultHeaders={defaultHeaders} />
         ) : (
-          <></>
+          <div className="footer_container">
+            <i class="bi bi-c-circle" /> &nbsp; ɴᴀᴇɴɢᴊᴀɴɢɢᴏ
+          </div>
         )}
       </div>
     </>
