@@ -153,9 +153,9 @@ const MainPage = ({ defaultHeaders }) => {
         <CheckboxItem
           key={item.index}
           index={item.index}
-          product={item.product}
-          exp_date={item.exp_date}
-          is_donatable={item.is_donatable}
+          product={item.productName}
+          exp_date={item.expdate}
+          is_donatable={item.donatable}
         />
       ))}
     </div>

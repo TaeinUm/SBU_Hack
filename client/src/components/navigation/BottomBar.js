@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 
+
+
 const BottomBar = ({ defaultHeaders }) => {
   const navigate = useNavigate();
   const [activeIcon, setActiveIcon] = useState("");
@@ -40,16 +42,28 @@ const BottomBar = ({ defaultHeaders }) => {
       if (!response.ok) {
         throw new Error("Upload failed");
       }
-
+      setFile(null);
       navigate("/input");
     } catch (error) {
       console.error("Error uploading file:", error);
     }
   };
 
+  const UploadBtn = () => {
+    return(
+      <div className="uploadBtn_container">
+        <button className="uploadBtn" onClick={handleSubmit}>
+          <span className="uploadBtn_top"> 
+            Upload
+          </span>
+        </button>
+      </div>
+    );
+  }
+
   return (
     <>
-      <div onClick={handleSubmit}>hi</div>
+      {file ? <UploadBtn/> : <></>}
       <div className="navigation-card">
         {/* First icon */}
         <div

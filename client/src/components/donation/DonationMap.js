@@ -8,11 +8,16 @@ import { LoginState } from '../../states/LoginState.ts';
 import { useNavigate } from "react-router-dom";
 
 
-const DonationMap = () => {
+const DonationMap = ({defaultHeaders}) => {
     const [userLocation, setUserLocation] = useState({ lat: -34.397, lng: 150.644 });
     const [isLoading, setIsLoading] = useState(true);
     const [foodBanks, setFoodBanks] = useState([]);
     const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+    const [items, setItems] = useState([]); //dlfma
+
+    const userDataString = localStorage.getItem("user");
+    const userData = JSON.parse(userDataString);
+    const userId = userData._id;
 
     const navigate = useNavigate();
 
@@ -22,92 +27,115 @@ const DonationMap = () => {
         }
     }, [isLoggedIn, navigate]);
 
-    const foods = [
-          {
-            index: "01",
-            product: "Crackers",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "02",
-            product: "Fruit2",
-            exp_date: "2024/3/23",
-            is_donatable: false,
-          },
-          {
-            index: "03",
-            product: "Fruit3",
-            exp_date: "2024/3/23",
-            is_donatable: false,
-          },
-          {
-            index: "04",
-            product: "Fruit4",
-            exp_date: "2024/3/23",
-            is_donatable: false,
-          },
-          {
-            index: "05",
-            product: "Canned Chicken Noodle Soup",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "06",
-            product: "Spam",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "07",
-            product: "Mixed Vegitables",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "08",
-            product: "Sweet peas",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "09",
-            product: "Beefaroni",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "10",
-            product: "Sliced Carrots",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "11",
-            product: "Chiken of the Sea",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "12",
-            product: "StarKist",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "13",
-            product: "Diced Potatos",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-          {
-            index: "14",
-            product: "Whole Kernel Corn",
-            exp_date: "2024/3/23",
-            is_donatable: true,
-          },
-        ];
+    useEffect(() => {
+        console.log(userData);
+        const fetchItems = async () => {
+          try {
+            const res = await fetch(`/api/users/${userId}/products`, {
+              method: "GET",
+              headers: {
+                ...defaultHeaders,
+                Authorization: `Bearer ${localStorage.getItem("token")}`,
+              },
+            });
+            if (!res.ok) {
+              throw new Error("Failed to fetch items");
+            }
+            const data = await res.json();
+            setItems(data);
+          } catch (error) {
+            console.error(error);
+          }
+        };
+        fetchItems();
+      }, []);
+
+    // const foods = [
+    //       {
+    //         index: "01",
+    //         product: "Crackers",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "02",
+    //         product: "Fruit2",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: false,
+    //       },
+    //       {
+    //         index: "03",
+    //         product: "Fruit3",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: false,
+    //       },
+    //       {
+    //         index: "04",
+    //         product: "Fruit4",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: false,
+    //       },
+    //       {
+    //         index: "05",
+    //         product: "Canned Chicken Noodle Soup",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "06",
+    //         product: "Spam",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "07",
+    //         product: "Mixed Vegitables",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "08",
+    //         product: "Sweet peas",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "09",
+    //         product: "Beefaroni",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "10",
+    //         product: "Sliced Carrots",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "11",
+    //         product: "Chiken of the Sea",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "12",
+    //         product: "StarKist",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "13",
+    //         product: "Diced Potatos",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //       {
+    //         index: "14",
+    //         product: "Whole Kernel Corn",
+    //         exp_date: "2024/3/23",
+    //         is_donatable: true,
+    //       },
+    //     ];
 
     useEffect(() => {
         window.initMap = () => {
@@ -195,7 +223,7 @@ const DonationMap = () => {
                     <div id="map" style={{ height: '630px', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121', marginTop: '-20px'}}></div>
                     <div id="ScrollViewContainer" style={{height: '100px', width: '100%', marginTop: "25px", display: "flex", justifyContent: 'space-between'}}>
                         <BankModal props={foodBanks}/>
-                        <Modal foods={foods}/>
+                        <Modal foods={items}/>
                     </div>
                 </>
             )}
