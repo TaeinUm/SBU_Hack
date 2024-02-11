@@ -1,11 +1,5 @@
 import * as React from 'react';
-import Backdrop from '@mui/material/Backdrop';
-import Box from '@mui/material/Box';
-import Modal from '@mui/material/Modal';
-import Fade from '@mui/material/Fade';
-import Button from '@mui/material/Button';
-import Typography from '@mui/material/Typography';
-
+import { Box, Modal, Fade, Typography, Button } from '@mui/material';
 import './Modal.css';
 
 const style = {
@@ -18,40 +12,61 @@ const style = {
   border: '2px solid #000',
   boxShadow: 24,
   p: 4,
+  overflow: 'hidden', // Prevent overflow to enable internal scrolling
+  display: 'flex', // Ensure the content is flex
+  flexDirection: 'column', // Stack children vertically
+  maxHeight: '90vh', // Adjust based on your preference
 };
 
-export default function TransitionsModal() {
+export default function TransitionsModal(props) {
   const [open, setOpen] = React.useState(false);
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
+  const foodBanks = props.props;
+
+  const ModalList = () => (
+    <Box
+      sx={{
+        overflowY: 'auto', // Enable vertical scrolling for the list
+        maxHeight: 'calc(450px - 64px)', // Adjust the maxHeight to accommodate the header's height
+      }}
+    >
+      {foodBanks.map((place, index) => (
+        <div key={index} style={{ display: 'flex', alignItems: 'center', marginBottom: '20px' }}>
+          <img
+            src={place.icon}
+            alt="icon"
+            style={{ marginRight: '10px', width: '30px', height: '30px', backgroundColor: place.icon_background_color }}
+          />
+          <div>
+            <div style={{ fontWeight: 'bold' }}>{place.name}</div>
+            <div>{place.vicinity}</div>
+          </div>
+        </div>
+      ))}
+    </Box>
+  );
 
   return (
-    <div style={{textAlign: 'right', marginTop: '5px'}}>
-      <Button className="btn" onClick={handleOpen}>
+    <div style={{ textAlign: 'right', marginTop: '5px' }}>
+      <button className="btn" onClick={handleOpen} style={{display: 'flex', flexDirection: 'row', marginLeft: '10px'}}>
         <img src={`${process.env.PUBLIC_URL}/bank.png`} alt="Bank" />
         &nbsp;Food Bank
-      </Button>
+      </button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
         open={open}
         onClose={handleClose}
         closeAfterTransition
-        slots={{ backdrop: Backdrop }}
-        slotProps={{
-          backdrop: {
-            timeout: 500,
-          },
-        }}
       >
         <Fade in={open}>
           <Box sx={style}>
-            <Typography id="transition-modal-title" variant="h6" component="h2">
-              This is Food Bank List Modal
-            </Typography>
-            <Typography id="transition-modal-description" sx={{ mt: 2 }}>
-              Duis mollis, est non commodo luctus, nisi erat porttitor ligula.
-            </Typography>
+            <Box justifyContent={'center'} display={'flex'} flexDirection={'row'} alignItems={'center'} mb={2}>
+              <img src={`${process.env.PUBLIC_URL}/nearby.png`} alt="Nearby" />
+              <Typography variant="h5" fontWeight={'bold'}>&nbsp;Food Banks</Typography>
+            </Box>
+            <ModalList />
           </Box>
         </Fade>
       </Modal>

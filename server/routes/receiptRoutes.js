@@ -6,7 +6,7 @@ import { protect } from "../middleware/authMiddleware.js";
 const upload = multer({ storage: multer.memoryStorage() });
 const router = express.Router();
 
-// router.post('/', upload.single('img'), uploadReceipt);
+router.post("/", upload.single("img"), uploadReceipt);
 
-router.route("/").post(protect, upload.single("img"), uploadReceipt);
+// router.route("/").post(protect, upload.single("img"), uploadReceipt);
 export default router;

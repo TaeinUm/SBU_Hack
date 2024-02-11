@@ -1,10 +1,10 @@
 .btn {
-    width: 130px;
-    height: 40px;
+    width: 150px;
+    height: 55px;
     font-size: 1.1em;
     cursor: pointer;
-    background-color: var(--secondary-color);
-    color: #fff;
+    background-color: var(--primary-main-color);
+    color: black;
     border: none;
     border-radius: 5px;
     transition: all .4s;
