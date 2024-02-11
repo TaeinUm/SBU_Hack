@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import "./navbar.css";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import CustomBtn from "../profile/CustomBtn";
-import { useLocation } from 'react-router-dom';
 
 const BottomBar = ({ defaultHeaders }) => {
   const navigate = useNavigate();
   const [activeIcon, setActiveIcon] = useState("");
   const [file, setFile] = useState(null);
+  const location = useLocation();
 
   const handleIconClick = (iconName) => {
     setActiveIcon(iconName);
@@ -21,6 +21,7 @@ const BottomBar = ({ defaultHeaders }) => {
 
     if (!file) {
       console.error("No file selected");
+      alert("No file!");
       return;
     }
 
@@ -57,9 +58,11 @@ const BottomBar = ({ defaultHeaders }) => {
     );
   }
 
+  const isMainPage = location.pathname === "/main";
+
   return (
     <>
-      {file ? <UploadBtn/> : <></>}
+      {file && isMainPage ? <UploadBtn /> : null}
       <div className="navigation-card">
         {/* First icon */}
         <div
