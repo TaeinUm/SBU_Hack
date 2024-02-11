@@ -34,7 +34,7 @@ export default function TransitionsModal(props) {
   const handleOpen = () => setOpen(true);
   const handleClose = () => setOpen(false);
   const foods = props.foods;
-  const donatableItems = foods.filter(food => food.is_donatable);
+  const donatableItems = foods.filter(food => food.donatable);
 
   const getRandomImage = () => {
     const randomIndex = Math.floor(Math.random() * canImages.length);
@@ -56,8 +56,10 @@ export default function TransitionsModal(props) {
             style={{ marginRight: '10px', width: '30px', height: '30px'}}
           />
           <div>
-            <div style={{ fontWeight: 'bold' }}>{item.product}</div>
-            <div>{"Expired by " + item.exp_date}</div>
+            <div style={{ fontWeight: 'bold' }}>{item.productName}</div>
+            <div>
+                {item.expdate ? "Expired by " + item.expdate : "No expire date"}
+            </div>
           </div>
         </div>
       ))}
