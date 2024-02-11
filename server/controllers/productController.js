@@ -1,24 +1,30 @@
 import User from '../models/User.js';
 
 export const updateProductInfo = async (req, res) => {
-    const { userId, productIndex } = req.params; // Assuming you pass the userId and the index of the product in the URL
+    const { userId, productId } = req.params; // Use productId instead of productIndex
     const { productName, expdate, donatable } = req.body;
 
     try {
-        // Find the user by ID
+        // Find the user and the product by ID
         const user = await User.findById(userId);
         if (!user) {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Update the product information in the user's products array
-        if (productName !== undefined) user.products[productIndex].productName = productName;
-        if (expdate !== undefined) user.products[productIndex].expdate = expdate;
-        if (donatable !== undefined) user.products[productIndex].donatable = donatable;
+        // Find the specific product to update
+        const product = user.products.id(productId); // Mongoose's id method to find a subdocument by its _id
+        if (!product) {
+            return res.status(404).json({ message: 'Product not found' });
+        }
+
+        // Update the product information
+        if (productName !== undefined) product.productName = productName;
+        if (expdate !== undefined) product.expdate = expdate;
+        if (donatable !== undefined) product.donatable = donatable;
 
         // Save the user document with updated product information
-        const updatedUser = await user.save();
-        res.status(200).json(updatedUser.products[productIndex]);
+        await user.save();
+        res.status(200).json(product);
     } catch (error) {
         console.error(error);
         res.status(400).json({ message: error.message });
@@ -26,7 +32,7 @@ export const updateProductInfo = async (req, res) => {
 };
 
 export const deleteProduct = async (req, res) => {
-    const { userId, productIndex } = req.params;
+    const { userId, productId } = req.params; // Use productId for deletion
 
     try {
         const user = await User.findById(userId);
@@ -34,13 +40,12 @@ export const deleteProduct = async (req, res) => {
             return res.status(404).json({ message: 'User not found' });
         }
 
-        // Check if the product exists
-        if (productIndex >= user.products.length || productIndex < 0) {
+        // Find and remove the product from the user's products array
+        const product = user.products.id(productId); // Find the subdocument
+        if (!product) {
             return res.status(404).json({ message: 'Product not found' });
         }
-
-        // Remove the product from the user's products array
-        user.products.splice(productIndex, 1);
+        product.remove(); // Remove the subdocument
 
         // Save the updated user document
         await user.save();
