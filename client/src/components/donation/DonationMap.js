@@ -149,7 +149,7 @@ const DonationMap = ({ defaultHeaders }) => {
               height: "630px",
               borderRadius: "10px",
               border: "4px solid #efeed7",
-              boxShadow: "0 6px 10px #212121",
+
               marginTop: "-20px",
             }}
           ></div>
