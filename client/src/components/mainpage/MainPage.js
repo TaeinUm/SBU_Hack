@@ -66,7 +66,7 @@ const MainPage = ({ defaultHeaders }) => {
     <div>
       {items.length === 0 ? ( // Check if items array is empty
         <div className="mainpage_container">
-          <div className="mainpage_desc">
+          <div className="mainpage_desc_nodata">
             You currently <strong>do not</strong> have any products bought.
             <br />
             <br />
@@ -129,6 +129,10 @@ const MainPage = ({ defaultHeaders }) => {
                 <Lottie animationData={NoData} />0 Products Found
               </div>
             )}
+          </div>
+          <div className="mainpage_desc">
+            Click on the item to remove it and unclick to restore. Items will
+            disappear permanently after 24 hours.
           </div>
         </>
       )}
