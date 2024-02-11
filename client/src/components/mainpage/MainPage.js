@@ -6,8 +6,9 @@ import { LoginState } from "../../states/LoginState.ts";
 import { useNavigate } from "react-router-dom";
 import Lottie from "lottie-react";
 import NoDataIndicator from "../../assets/Lottie/NoDataIndicator.json";
+import NoData from "../../assets/Lottie/NoData.json";
 
-const NonDonatableItem = ({ index, product, exp_date, is_donatable }) => {
+const NonDonatableItem = ({ index, product, exp_date, donatable }) => {
   return (
     <>
       <input value={product} name="data" type="checkbox" id={index} />
@@ -61,10 +62,9 @@ const MainPage = ({ defaultHeaders }) => {
     };
     fetchItems();
   }, []);
-
   return (
     <div>
-      {items.length === 0 ? (
+      {items.length === 0 ? ( // Check if items array is empty
         <div className="mainpage_container">
           <div className="mainpage_desc">
             You currently <strong>do not</strong> have any products bought.
@@ -82,32 +82,52 @@ const MainPage = ({ defaultHeaders }) => {
         <>
           <div className="checklist_title">Products Donatable</div>
           <div className="checklist donatable_container">
-            {items.map(
-              (item) =>
-                item.donatable && (
-                  <DonatableItem
-                    key={item.index}
-                    index={item.index}
-                    product={item.productName}
-                    exp_date={item.expdate}
-                    is_donatable={item.donatable}
-                  />
-                )
+            {items
+              .filter((item) => item.donatable)
+              .map((item) => (
+                <DonatableItem
+                  key={item.index}
+                  index={item.index}
+                  product={item.productName}
+                  exp_date={item.expdate}
+                  is_donatable={item.donatable}
+                />
+              ))}
+            {items.filter((item) => item.donatable).length === 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Lottie animationData={NoData} />0 Donatable Products Found
+              </div>
             )}
           </div>
-          <div className="checklist_title">Non-Donatable Item</div>
+          <div className="checklist_title">Other Products</div>
           <div className="checklist non_donatable_container">
-            {items.map(
-              (item) =>
-                !item.donatable && (
-                  <NonDonatableItem
-                    key={item.index}
-                    index={item.index}
-                    product={item.productName}
-                    exp_date={item.expdate}
-                    is_donatable={item.donatable}
-                  />
-                )
+            {items
+              .filter((item) => !item.donatable)
+              .map((item) => (
+                <NonDonatableItem
+                  key={item.index}
+                  index={item.index}
+                  product={item.productName}
+                  exp_date={item.expdate}
+                  is_donatable={item.donatable}
+                />
+              ))}
+            {items.filter((item) => !item.donatable).length === 0 && (
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  alignItems: "center",
+                }}
+              >
+                <Lottie animationData={NoData} />0 Products Found
+              </div>
             )}
           </div>
         </>

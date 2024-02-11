@@ -44,7 +44,9 @@
   background-color: var(--secondary-bg-color);
 }
 .checklist_title {
-  font-weight: bold;
+  font-weight: 300;
+  font-size: 1.5rem;
+  margin-bottom: 0.5rem;
 }
 
 .checklist::-webkit-scrollbar {
