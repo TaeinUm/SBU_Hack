@@ -26,7 +26,7 @@ app.use(express.json());
 app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 
-// // Serve static files from the React app
+// // Serve static files from the React app/
 // app.use(express.static(path.join(__dirname, '../client/build')));
 
 // // The "catchall" handler: for any request that doesn't
