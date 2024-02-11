@@ -5,7 +5,7 @@ import CustomBtn from "../profile/CustomBtn";
 
 const BottomBar = ({ defaultHeaders }) => {
   const navigate = useNavigate();
-  const [activeIcon, setActiveIcon] = useState("");
+  const [activeIcon, setActiveIcon] = useState("house");
   const [file, setFile] = useState(null);
   const location = useLocation();
 
@@ -51,12 +51,12 @@ const BottomBar = ({ defaultHeaders }) => {
   };
 
   const UploadBtn = () => {
-    return(
+    return (
       <div className="uploadBtn_container">
         <CustomBtn text={"Upload Receipt"} onClick={handleSubmit}></CustomBtn>
       </div>
     );
-  }
+  };
 
   const isMainPage = location.pathname === "/main";
 
