@@ -32,6 +32,7 @@ const MainPage = ({ defaultHeaders }) => {
   const [items, setItems] = useState([]);
 
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
 
@@ -62,6 +63,14 @@ const MainPage = ({ defaultHeaders }) => {
     };
     fetchItems();
   }, []);
+
+  const formatExpDate = (exp_date) => {
+    const date = new Date(exp_date);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Month is zero-based, so we add 1
+    const day = date.getDate();
+    return `${year}/${month}/${day}`;
+  };
   return (
     <div>
       {items.length === 0 ? ( // Check if items array is empty
@@ -80,7 +89,7 @@ const MainPage = ({ defaultHeaders }) => {
         </div>
       ) : (
         <>
-          <div className="checklist_title">Products Donatable</div>
+          <div className="checklist_title">Products Donable</div>
           <div className="checklist donatable_container">
             {items
               .filter((item) => item.donatable)
@@ -89,7 +98,7 @@ const MainPage = ({ defaultHeaders }) => {
                   key={item.index}
                   index={item.index}
                   product={item.productName}
-                  exp_date={item.expdate}
+                  exp_date={formatExpDate(item.expdate)}
                   is_donatable={item.donatable}
                 />
               ))}
@@ -114,7 +123,7 @@ const MainPage = ({ defaultHeaders }) => {
                   key={item.index}
                   index={item.index}
                   product={item.productName}
-                  exp_date={item.expdate}
+                  exp_date={formatExpDate(item.expdate)}
                   is_donatable={item.donatable}
                 />
               ))}

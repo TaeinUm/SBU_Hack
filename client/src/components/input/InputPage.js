@@ -5,6 +5,8 @@ import CustomBtn from "../profile/CustomBtn";
 import { useNavigate } from "react-router-dom";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../../states/LoginState.ts";
+import Lottie from "lottie-react";
+import Loader2 from "../../assets/Lottie/Loader2.json";
 
 // InputPage component
 const InputPage = ({ isAuthenticated, defaultHeaders }) => {
@@ -24,11 +26,12 @@ const InputPage = ({ isAuthenticated, defaultHeaders }) => {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
-
-  // Fetch items from the backend
   useEffect(() => {
+    console.log("Calling");
     const fetchItems = async () => {
       try {
+        await new Promise((resolve) => setTimeout(resolve, 3000));
+
         const res = await fetch(`/api/users/${userId}/products`, {
           method: "GET",
           headers: {
@@ -40,12 +43,15 @@ const InputPage = ({ isAuthenticated, defaultHeaders }) => {
         }
         const data = await res.json();
         setItems(data);
-        setLoading(false); // Set loading to false when items are fetched
+        setLoading(false);
       } catch (error) {
         console.error(error);
       }
     };
-    fetchItems();
+
+    const timer = setTimeout(fetchItems, 3000);
+
+    return () => clearTimeout(timer);
   }, []);
 
   useEffect(() => {
@@ -99,7 +105,9 @@ const InputPage = ({ isAuthenticated, defaultHeaders }) => {
         donatable!
       </div>
       {loading ? ( // Render loader if loading is true
-        <>Loading</>
+        <div>
+          <Lottie animationData={Loader2} style={{ marginTop: "4rem" }} />
+        </div>
       ) : (
         <div className="inputpage_container">
           {items.map((item) => (
