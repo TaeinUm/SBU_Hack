@@ -26,7 +26,8 @@ router.post("/register", registerUser);
 router.post("/logout", logoutUser);
 
 // User profile management
-router.route("/profile")
+router
+  .route("/profile")
   .get(protect, getUser)
   .put(protect, updateUser)
   .delete(protect, deleteUser);
@@ -35,11 +36,12 @@ router.route("/profile")
 router.post("/upload", protect, uploadSingleImage, uploadReceiptImage);
 
 // Product management within a user document
-router.route('/:userId/products')
-  .get(getUserProducts); // Get all products for a user
+router.route("/:userId/products").get(getUserProducts); // Get all products for a user
 
-router.route('/:userId/products/:productId')
-  .put(protect, updateProductInfo) // Update a specific product
+router
+  .route("/:userId/products/:productId") // Update a specific product
   .delete(protect, deleteProduct); // Delete a specific product
+router.route("/:userId/products").put(protect, updateProductInfo); // Update a specific product
+// Delete a specific product
 
 export default router;

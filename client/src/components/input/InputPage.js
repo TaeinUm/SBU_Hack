@@ -54,29 +54,41 @@ const InputPage = ({ isAuthenticated, defaultHeaders }) => {
 
   const handleInputChange = (index, value) => {
     const updatedItems = items.map((item) =>
-      item.index === index ? { ...item, product: value } : item
+      item.index === index ? { ...item, productName: value } : item
     );
     setItems(updatedItems);
   };
 
   const handleCheckboxChange = (index, checked) => {
     const updatedItems = items.map((item) =>
-      item.index === index ? { ...item, is_donatable: checked } : item
+      item.index === index ? { ...item, donatable: checked } : item
     );
     setItems(updatedItems);
   };
 
   const handleDateChange = (index, value) => {
     const updatedItems = items.map((item) =>
-      item.index === index ? { ...item, exp_date: value } : item
+      item.index === index ? { ...item, expdate: value } : item
     );
     setItems(updatedItems);
   };
 
   const handleUpdate = async () => {
+    console.log("UPDATED ITEMS: ", items);
     try {
-      const res = await fetch(`/api/users/${userId}/`);
-    } catch (error) {}
+      const res = await fetch(`/api/users/${userId}/products`, {
+        method: "PUT",
+        ...defaultHeaders,
+        body: JSON.stringify(items),
+      });
+      if (!res.ok) {
+        throw new Error("Failed to update items");
+      }
+      console.log(res);
+      navigate("/main");
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (

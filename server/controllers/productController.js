@@ -3,36 +3,36 @@ import User from "../models/User.js";
 export const updateProductInfo = async (req, res) => {
   const { userId, productId } = req.params;
   const updates = req.body; // Assuming this contains the modifications to the product
-
+  console.log(updates);
   try {
-      // Find the user and the product by ID
-      const user = await User.findById(userId);
-      if (!user) {
-          return res.status(404).json({ message: "User not found" });
-      }
+    // Find the user and the product by ID
+    const user = await User.findById(userId);
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
 
-      // Find the specific product to update
-      const product = user.products.id(productId);
-      if (!product) {
-          return res.status(404).json({ message: "Product not found" });
-      }
+    // Find the specific product to update
+    const product = user.products.id(productId);
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
 
-      // Update the product information dynamically
-      for (const [key, value] of Object.entries(updates)) {
-          if (key === 'expdate' && value) {
-              // Ensure expdate is converted from string to Date type
-              product[key] = new Date(value);
-          } else {
-              product[key] = value;
-          }
+    // Update the product information dynamically
+    for (const [key, value] of Object.entries(updates)) {
+      if (key === "expdate" && value) {
+        // Ensure expdate is converted from string to Date type
+        product[key] = new Date(value);
+      } else {
+        product[key] = value;
       }
+    }
 
-      // Save the user document with updated product information
-      await user.save();
-      res.status(200).json(product);
+    // Save the user document with updated product information
+    await user.save();
+    res.status(200).json(product);
   } catch (error) {
-      console.error(error);
-      res.status(400).json({ message: error.message });
+    console.error(error);
+    res.status(400).json({ message: error.message });
   }
 };
 
@@ -63,9 +63,9 @@ export const deleteProduct = async (req, res) => {
 
 // Get all the products
 export const getUserProducts = async (req, res) => {
-    try {
-        const userId = req.params.userId;
-        const user = await User.findById(userId).exec();
+  try {
+    const userId = req.params.userId;
+    const user = await User.findById(userId).exec();
 
     if (!user) {
       return res.status(404).json({ message: "User not found" });
