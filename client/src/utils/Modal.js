@@ -40,6 +40,13 @@ export default function TransitionsModal(props) {
     const randomIndex = Math.floor(Math.random() * canImages.length);
     return `${process.env.PUBLIC_URL}/cans/${canImages[randomIndex]}`;
   };
+  const formatExpDate = (exp_date) => {
+    const date = new Date(exp_date);
+    const year = date.getFullYear();
+    const month = date.getMonth() + 1; // Month is zero-based, so we add 1
+    const day = date.getDate();
+    return `${year}/${month}/${day}`;
+  };
 
   const ModalList = () => (
     <Box
@@ -65,7 +72,9 @@ export default function TransitionsModal(props) {
           <div>
             <div style={{ fontWeight: "bold" }}>{item.productName}</div>
             <div>
-              {item.expdate ? "Expired by " + item.expdate : "No expire date"}
+              {item.expdate
+                ? "Expired by " + formatExpDate(item.expdate)
+                : "No expire date"}
             </div>
           </div>
         </div>
@@ -81,7 +90,7 @@ export default function TransitionsModal(props) {
         style={{ display: "flex", flexDirection: "row", marginRight: "10px" }}
       >
         <img src={`${process.env.PUBLIC_URL}/bread.png`} alt="Bread" />
-        &nbsp;Donatable Foods
+        &nbsp;Donable Foods
       </button>
       <Modal
         aria-labelledby="transition-modal-title"

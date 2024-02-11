@@ -102,7 +102,7 @@ const InputPage = ({ isAuthenticated, defaultHeaders }) => {
       <h2>Edit Your Product Data</h2>
       <div className="input_page_desc">
         Update your product name, expiration data and check if your product is
-        donatable!
+        donable!
       </div>
       {loading ? ( // Render loader if loading is true
         <div>
