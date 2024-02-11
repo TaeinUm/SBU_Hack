@@ -2,6 +2,8 @@
 import express, { urlencoded } from 'express';
 import dotenv from 'dotenv';
 import cookieParser from 'cookie-parser';
+import path from 'path';
+
 
 // Importing configurations and middleware
 import connectDB from './config/db.js';
