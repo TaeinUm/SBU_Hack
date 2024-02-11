@@ -3,113 +3,54 @@ import "./inputpage.css";
 import CustomInput from "./CustomInput";
 import CustomBtn from "../profile/CustomBtn";
 import { useNavigate } from "react-router-dom";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../states/LoginState.ts";
 
-import { useRecoilState } from 'recoil';
-import { LoginState } from '../../states/LoginState.ts';
-
-const InputPage = ({ isAuthenticated }) => {
-  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
-
+// InputPage component
+const InputPage = ({ isAuthenticated, defaultHeaders }) => {
   const navigate = useNavigate();
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+  const [items, setItems] = useState(null); // State to store items
+  const [loading, setLoading] = useState(true); // State to track loading status
 
+  // Fetch user ID from local storage
+  const userDataString = localStorage.getItem("user");
+  const userData = JSON.parse(userDataString);
+  const userId = userData._id;
+
+  // Check if user is logged in
   useEffect(() => {
     if (!isLoggedIn) {
       navigate("/");
     }
   }, [isLoggedIn, navigate]);
 
-  const [items, setItems] = useState([
-    {
-      index: "01",
-      product: "Fruit1",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "02",
-      product: "Fruit2",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "03",
-      product: "Fruit3",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "04",
-      product: "Fruit4",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "05",
-      product: "Fruit5",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "06",
-      product: "Fruit6",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "07",
-      product: "Fruit7",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "08",
-      product: "Fruit8",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "09",
-      product: "Fruit9",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "10",
-      product: "Fruit10",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "11",
-      product: "Fruit11",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "12",
-      product: "Fruit12",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "13",
-      product: "Fruit13",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "14",
-      product: "Fruit14",
-      exp_date: "",
-      is_donatable: false,
-    },
-    {
-      index: "15",
-      product: "Fruit15",
-      exp_date: "",
-      is_donatable: false,
-    },
-  ]);
+  // Fetch items from the backend
+  useEffect(() => {
+    const fetchItems = async () => {
+      try {
+        const res = await fetch(`/api/users/${userId}/products`, {
+          method: "GET",
+          headers: {
+            ...defaultHeaders,
+          },
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch items");
+        }
+        const data = await res.json();
+        setItems(data);
+        setLoading(false); // Set loading to false when items are fetched
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchItems();
+  }, []);
+
+  useEffect(() => {
+    console.log(items);
+  }, [items]);
 
   const handleInputChange = (index, value) => {
     const updatedItems = items.map((item) =>
@@ -119,32 +60,49 @@ const InputPage = ({ isAuthenticated }) => {
   };
 
   const handleCheckboxChange = (index, checked) => {
-    console.log(index);
     const updatedItems = items.map((item) =>
       item.index === index ? { ...item, is_donatable: checked } : item
     );
     setItems(updatedItems);
   };
 
-  const handleUpdate = () => {
-    console.log(items);
+  const handleDateChange = (index, value) => {
+    const updatedItems = items.map((item) =>
+      item.index === index ? { ...item, exp_date: value } : item
+    );
+    setItems(updatedItems);
+  };
+
+  const handleUpdate = async () => {
+    try {
+      const res = await fetch(`/api/users/${userId}/`);
+    } catch (error) {}
   };
 
   return (
     <div className="input_page">
       <h2>Edit Your Product Data</h2>
-      <div className="inputpage_container">
-        {items.map((item) => (
-          <CustomInput
-            key={item.index}
-            index={item.index}
-            product={item.product}
-            isDonatable={item.is_donatable}
-            onInputChange={handleInputChange}
-            onCheckboxChange={handleCheckboxChange}
-          />
-        ))}
+      <div className="input_page_desc">
+        Update your product name, expiration data and check if your product is
+        donatable!
       </div>
+      {loading ? ( // Render loader if loading is true
+        <>Loading</>
+      ) : (
+        <div className="inputpage_container">
+          {items.map((item) => (
+            <CustomInput
+              key={item.index}
+              index={item.index}
+              product={item.productName}
+              isDonatable={item.donatable}
+              onInputChange={handleInputChange}
+              onCheckboxChange={handleCheckboxChange}
+              onDateChange={handleDateChange}
+            />
+          ))}
+        </div>
+      )}
       <div className="inputpage_btn_container">
         <CustomBtn text={"Update Food Data"} onClick={handleUpdate} />
       </div>

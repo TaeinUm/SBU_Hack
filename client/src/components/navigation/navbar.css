@@ -28,6 +28,18 @@
   justify-content: space-between;
   padding: 20px;
 }
+.logo-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  align-items: flex-end;
+  font-size: 1.5rem;
+  font-weight: 200;
+}
+.logo-container div {
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.7px;
+}
 
 .logo-container img {
   height: auto;

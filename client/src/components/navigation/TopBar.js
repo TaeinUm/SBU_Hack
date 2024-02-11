@@ -2,14 +2,13 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import "./navbar.css";
 import LogoImage from "../../assets/images/logo3.png";
-import { useRecoilState } from 'recoil';
-import { LoginState } from '../../states/LoginState.ts';
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../states/LoginState.ts";
 
 const TopBar = () => {
   const navigate = useNavigate();
   const isAuthenticated = localStorage.getItem("isAuthenticated") !== null;
   const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
-
 
   return (
     <div className="top-bar">
@@ -22,6 +21,7 @@ const TopBar = () => {
             navigate("/main");
           }}
         />
+        {isLoggedIn && <div>BitePrint</div>}
       </div>
       {isLoggedIn && (
         <div className="profile-button-container">
