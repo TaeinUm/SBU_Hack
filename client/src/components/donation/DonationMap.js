@@ -1,23 +1,100 @@
 import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
 import LoadingScreen from '../loading/LoadingScreen';
-import Modal from '../../utils/Modal';
-import BankModal from '../../utils/Modal2';
+import Modal from '../../utils/Modal.js';
+import BankModal from '../../utils/Modal2.js';
 
 
 const DonationMap = () => {
     const [userLocation, setUserLocation] = useState({ lat: -34.397, lng: 150.644 });
     const [isLoading, setIsLoading] = useState(true);
+    const [foodBanks, setFoodBanks] = useState([]);
 
-    // Ref for the bottom sheet
-    const bottomSheetRef = useRef(null);
-
-    // Snap points for the bottom sheet
-    const snapPoints = useMemo(() => ['25%', '50%'], []);
-
-    // Handler to expand the bottom sheet
-    const handleExpandPress = useCallback(() => {
-        bottomSheetRef.current?.expand();
-    }, []);
+    const foods = [
+          {
+            index: "01",
+            product: "Fruit1",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "02",
+            product: "Fruit2",
+            exp_date: "2024/3/23",
+            is_donatable: false,
+          },
+          {
+            index: "03",
+            product: "Fruit3",
+            exp_date: "2024/3/23",
+            is_donatable: false,
+          },
+          {
+            index: "04",
+            product: "Fruit4",
+            exp_date: "2024/3/23",
+            is_donatable: false,
+          },
+          {
+            index: "05",
+            product: "Fruit5",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "06",
+            product: "Fruit6",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "07",
+            product: "Fruit7",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "08",
+            product: "Fruit8",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "09",
+            product: "Fruit9",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "10",
+            product: "Fruit10",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "11",
+            product: "Fruit11",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "12",
+            product: "Fruit12",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "13",
+            product: "Fruit12",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+          {
+            index: "14",
+            product: "Fruit12",
+            exp_date: "2024/3/23",
+            is_donatable: true,
+          },
+        ];
 
     useEffect(() => {
         window.initMap = () => {
@@ -74,6 +151,7 @@ const DonationMap = () => {
             center: location,
             disableDefaultUI: true, 
             zoomControl: true, 
+            scrollwheel: false,
         });
     
         const service = new window.google.maps.places.PlacesService(map);
@@ -83,6 +161,7 @@ const DonationMap = () => {
           keyword: 'food banks',
         }, (results, status) => {
             if (status === window.google.maps.places.PlacesServiceStatus.OK && results) {
+                setFoodBanks(results);
                 results.forEach((place) => {
                     new window.google.maps.Marker({
                         position: place.geometry.location,
@@ -100,10 +179,10 @@ const DonationMap = () => {
                 <LoadingScreen />
             ) : (
                 <>
-                    <div id="map" style={{ height: '65vh', width: '100%', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121', marginTop: '-20px'}}></div>
+                    <div id="map" style={{ height: '90%', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121', marginTop: '-20px'}}></div>
                     <div id="ScrollViewContainer" style={{height: '30px', width: '100%', marginTop: "25px", display: "flex", justifyContent: 'space-between'}}>
-                        <BankModal/>
-                        <Modal/>
+                        <BankModal props={foodBanks}/>
+                        <Modal foods={foods}/>
                     </div>
                 </>
             )}
