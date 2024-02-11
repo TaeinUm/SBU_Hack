@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
-import LoadingScreen from '../loading/LoadingScreen';
+import LoadingScreen from './LoadingScreen.js';
 import Modal from '../../utils/Modal.js';
 import BankModal from '../../utils/Modal2.js';
 
@@ -179,8 +179,8 @@ const DonationMap = () => {
                 <LoadingScreen />
             ) : (
                 <>
-                    <div id="map" style={{ height: '90%', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121', marginTop: '-20px'}}></div>
-                    <div id="ScrollViewContainer" style={{height: '30px', width: '100%', marginTop: "25px", display: "flex", justifyContent: 'space-between'}}>
+                    <div id="map" style={{ height: '630px', borderRadius: '10px', border: '4px solid #efeed7', boxShadow: '0 6px 10px #212121', marginTop: '-20px'}}></div>
+                    <div id="ScrollViewContainer" style={{height: '100px', width: '100%', marginTop: "25px", display: "flex", justifyContent: 'space-between'}}>
                         <BankModal props={foodBanks}/>
                         <Modal foods={foods}/>
                     </div>
@@ -190,40 +190,40 @@ const DonationMap = () => {
     );
   };
 
-  return (
-    <>
-      {isLoading ? (
-        <LoadingScreen />
-      ) : (
-        <>
-          <div
-            id="map"
-            style={{
-              height: "65vh",
-              width: "100%",
-              borderRadius: "10px",
-              border: "4px solid #efeed7",
-              boxShadow: "0 6px 10px #212121",
-              marginTop: "-20px",
-            }}
-          ></div>
-          <div
-            id="ScrollViewContainer"
-            style={{
-              height: "30px",
-              width: "100%",
-              marginTop: "25px",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
-            <BankModal />
-            <Modal />
-          </div>
-        </>
-      )}
-    </>
-  );
-};
+//   return (
+//     <>
+//       {isLoading ? (
+//         <LoadingScreen />
+//       ) : (
+//         <>
+//           <div
+//             id="map"
+//             style={{
+//               height: "65vh",
+//               width: "100%",
+//               borderRadius: "10px",
+//               border: "4px solid #efeed7",
+//               boxShadow: "0 6px 10px #212121",
+//               marginTop: "-20px",
+//             }}
+//           ></div>
+//           <div
+//             id="ScrollViewContainer"
+//             style={{
+//               height: "30px",
+//               width: "100%",
+//               marginTop: "25px",
+//               display: "flex",
+//               justifyContent: "space-between",
+//             }}
+//           >
+//             <BankModal />
+//             <Modal />
+//           </div>
+//         </>
+//       )}
+//     </>
+//   );
+
 
 export default DonationMap;

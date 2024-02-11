@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { Box, Modal, Fade, Typography, Button } from '@mui/material';
+import './Modal.css';
 
 const style = {
   position: 'absolute',
@@ -48,10 +49,10 @@ export default function TransitionsModal(props) {
 
   return (
     <div style={{ textAlign: 'right', marginTop: '5px' }}>
-      <Button className="btn" onClick={handleOpen}>
+      <button className="btn" onClick={handleOpen} style={{display: 'flex', flexDirection: 'row', marginLeft: '10px'}}>
         <img src={`${process.env.PUBLIC_URL}/bank.png`} alt="Bank" />
         &nbsp;Food Bank
-      </Button>
+      </button>
       <Modal
         aria-labelledby="transition-modal-title"
         aria-describedby="transition-modal-description"
