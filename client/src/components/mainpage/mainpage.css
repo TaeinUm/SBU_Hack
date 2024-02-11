@@ -1,11 +1,10 @@
 #checklist {
   --background: #fff;
-  --text: #414856;
-  --check: #4f29f0;
+  --text: --font-color-dark;
+  --check: var(--dark-tree-color);
   --disabled: #c3c8de;
   --border-radius: 10px;
-  background: var(--background-color);
-  /* height: max-content; */
+  background: var(--secondary-bg-color);
   overflow-y: scroll;
   overflow-x: hidden;
   border-radius: var(--border-radius);
@@ -15,6 +14,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  height: 60vh;
 }
 
 #checklist label {
@@ -61,7 +61,7 @@
   border: 0;
   margin-right: 20px;
   cursor: pointer;
-  background: var(--background-color);
+  background: var(--secondary-bg-color);
 }
 
 #checklist input[type="checkbox"]::before,
@@ -187,8 +187,10 @@
 @keyframes firework {
   0% {
     opacity: 1;
-    box-shadow: 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0,
-      0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0, 0 0 0 -2px #4f29f0;
+    box-shadow: 0 0 0 -2px var(--dark-tree-color),
+      0 0 0 -2px var(--dark-tree-color), 0 0 0 -2px var(--dark-tree-color),
+      0 0 0 -2px var(--dark-tree-color), 0 0 0 -2px var(--dark-tree-color),
+      0 0 0 -2px var(--dark-tree-color);
   }
 
   30% {
@@ -197,8 +199,10 @@
 
   100% {
     opacity: 0;
-    box-shadow: 0 -15px 0 0px #4f29f0, 14px -8px 0 0px #4f29f0,
-      14px 8px 0 0px #4f29f0, 0 15px 0 0px #4f29f0, -14px 8px 0 0px #4f29f0,
-      -14px -8px 0 0px #4f29f0;
+    box-shadow: 0 -15px 0 0px var(--dark-tree-color),
+      14px -8px 0 0px var(--dark-tree-color),
+      14px 8px 0 0px var(--dark-tree-color), 0 15px 0 0px var(--dark-tree-color),
+      -14px 8px 0 0px var(--dark-tree-color),
+      -14px -8px 0 0px var(--dark-tree-color);
   }
 }

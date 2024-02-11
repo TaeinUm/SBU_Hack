@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import "./inputpage.css";
 import CustomInput from "./CustomInput";
+import CustomBtn from "../profile/CustomBtn";
 
 const InputPage = () => {
   const [items, setItems] = useState([
@@ -64,6 +65,36 @@ const InputPage = () => {
       exp_date: "",
       is_donatable: false,
     },
+    {
+      index: "11",
+      product: "Fruit11",
+      exp_date: "",
+      is_donatable: false,
+    },
+    {
+      index: "12",
+      product: "Fruit12",
+      exp_date: "",
+      is_donatable: false,
+    },
+    {
+      index: "13",
+      product: "Fruit13",
+      exp_date: "",
+      is_donatable: false,
+    },
+    {
+      index: "14",
+      product: "Fruit14",
+      exp_date: "",
+      is_donatable: false,
+    },
+    {
+      index: "15",
+      product: "Fruit15",
+      exp_date: "",
+      is_donatable: false,
+    },
   ]);
 
   const handleInputChange = (index, value) => {
@@ -86,9 +117,9 @@ const InputPage = () => {
   };
 
   return (
-    <div>
+    <div className="input_page">
+      <h2>Edit Your Product Data</h2>
       <div className="inputpage_container">
-        <h2>Edit your food data</h2>
         {items.map((item) => (
           <CustomInput
             key={item.index}
@@ -101,7 +132,7 @@ const InputPage = () => {
         ))}
       </div>
       <div className="inputpage_btn_container">
-        <button onClick={handleUpdate}> Update Food Data</button>
+        <CustomBtn text={"Update Food Data"} onClick={handleUpdate} />
       </div>
     </div>
   );

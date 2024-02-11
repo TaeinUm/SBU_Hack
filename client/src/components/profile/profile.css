@@ -67,6 +67,11 @@
   width: 100%;
   max-width: 180px;
 }
+.updatebtn_container {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
 
 .form__field {
   font-family: inherit;
@@ -75,7 +80,7 @@
   border-bottom: 2px solid #9b9b9b;
   outline: 0;
   font-size: 17px;
-  color: #fff;
+  color: rgb(62, 62, 62);
   padding: 7px 0;
   background: transparent;
   transition: border-color 0.2s;
@@ -105,7 +110,7 @@
   padding-bottom: 6px;
   font-weight: 700;
   border-width: 3px;
-  border-image: linear-gradient(to right, #116399, #38caef);
+  border-image: linear-gradient(to right, #bfd7f5, #acd0fc);
   border-image-slice: 1;
 }
 
@@ -115,8 +120,8 @@
   display: block;
   transition: 0.2s;
   font-size: 17px;
-  color: #38caef;
-  font-weight: 700;
+  color: #9cc9ff;
+  font-weight: 600;
 }
 
 /* reset input */

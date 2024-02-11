@@ -34,76 +34,76 @@ const Profile = ({ defaultHeaders }) => {
     }
   }, [isAuthenticated, navigate]);
 
-  // useEffect(() => {
-  //   fetchUserData();
-  // }, []);
-  // const fetchUserData = async () => {
-  //   const res = await fetch("/api/users/profile", {
-  //     ...defaultHeaders,
-  //     method: "GET",
-  //   });
-  //   const user = await res.json();
+  useEffect(() => {
+    fetchUserData();
+  }, []);
+  const fetchUserData = async () => {
+    const res = await fetch("/api/users/profile", {
+      ...defaultHeaders,
+      method: "GET",
+    });
+    const user = await res.json();
 
-  //   const { _id, username, email } = user;
-  //   setUserData(user);
-  // };
+    const { _id, username, email } = user;
+    setUserData(user);
+  };
 
   const handleLogout = async () => {
     console.log("Logout");
-    // try {
-    //   const response = await fetch("/api/users/logout", {
-    //     method: "POST",
-    //     headers: defaultHeaders,
-    //   });
-    //   if (!response.ok) {
-    //     throw new Error("Logout failed");
-    //   }
-    //   Cookies.remove("jwt");
-    //   dispatch(logout());
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
+    try {
+      const response = await fetch("/api/users/logout", {
+        method: "POST",
+        headers: defaultHeaders,
+      });
+      if (!response.ok) {
+        throw new Error("Logout failed");
+      }
+      Cookies.remove("jwt");
+      dispatch(logout());
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   const handleUpdateUser = async () => {
     console.log(userData, newPassword);
-    // try {
-    //   const res = await fetch("/api/users/profile", {
-    //     ...defaultHeaders,
-    //     method: "PUT",
-    //     body: JSON.stringify({
-    //       // userId: userData._id,
-    //       username: userData.username,
-    //       email: userData.email,
-    //       password: newPassword,
-    //     }),
-    //   });
-    //   if (!res.ok) {
-    //     throw new Error("Update failed");
-    //   }
-    //   const updatedUser = await res.json();
-    //   setUserData(updatedUser);
-    //   setUpdating(false);
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
+    try {
+      const res = await fetch("/api/users/profile", {
+        ...defaultHeaders,
+        method: "PUT",
+        body: JSON.stringify({
+          // userId: userData._id,
+          username: userData.username,
+          email: userData.email,
+          password: newPassword,
+        }),
+      });
+      if (!res.ok) {
+        throw new Error("Update failed");
+      }
+      const updatedUser = await res.json();
+      setUserData(updatedUser);
+      setUpdating(false);
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   const handleRemoveUser = async () => {
     console.log("Remove user");
-    // try {
-    //   const res = await fetch("/api/users/profile", {
-    //     ...defaultHeaders,
-    //     method: "DELETE",
-    //   });
-    //   if (!res.ok) {
-    //     throw new Error("Delete failed");
-    //   }
+    try {
+      const res = await fetch("/api/users/profile", {
+        ...defaultHeaders,
+        method: "DELETE",
+      });
+      if (!res.ok) {
+        throw new Error("Delete failed");
+      }
 
-    //   Cookies.remove("jwt");
-    //   dispatch(logout());
-    //   navigate("/");
-    // } catch (error) {
-    //   console.error(error.message);
-    // }
+      Cookies.remove("jwt");
+      dispatch(logout());
+      navigate("/");
+    } catch (error) {
+      console.error(error.message);
+    }
   };
   return (
     <div className="profile_container">
@@ -176,12 +176,15 @@ const Profile = ({ defaultHeaders }) => {
               <br />
               <span>email@email.com</span>
             </p>
-            <CustomBtn text={"Update User Info"} onClick={handleUpdateUser} />
-            <CustomBtn text={"Remove Account"} onClick={handleRemoveUser} />
+            <br />
+            <div className="updatebtn_container">
+              <CustomBtn text={"Update User Info"} onClick={handleUpdateUser} />
+              <CustomBtn text={"Remove Account"} onClick={handleRemoveUser} />
+              <CustomBtn text={"Logout"} onClick={handleLogout} />
+            </div>
           </>
         )}
       </div>
-      <CustomBtn text={"Logout"} onClick={handleLogout} />
     </div>
   );
 };
