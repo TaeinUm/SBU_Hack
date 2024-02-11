@@ -2,11 +2,11 @@ import React, { useState } from "react";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 import CustomBtn from "../profile/CustomBtn";
-import { useLocation } from 'react-router-dom';
+import { useLocation } from "react-router-dom";
 
 const BottomBar = ({ defaultHeaders }) => {
   const navigate = useNavigate();
-  const [activeIcon, setActiveIcon] = useState("");
+  const [activeIcon, setActiveIcon] = useState("house");
   const [file, setFile] = useState(null);
 
   const handleIconClick = (iconName) => {
@@ -50,16 +50,16 @@ const BottomBar = ({ defaultHeaders }) => {
   };
 
   const UploadBtn = () => {
-    return(
+    return (
       <div className="uploadBtn_container">
         <CustomBtn text={"Upload Receipt"} onClick={handleSubmit}></CustomBtn>
       </div>
     );
-  }
+  };
 
   return (
     <>
-      {file ? <UploadBtn/> : <></>}
+      {file ? <UploadBtn /> : <></>}
       <div className="navigation-card">
         {/* First icon */}
         <div
