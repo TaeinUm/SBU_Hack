@@ -24,7 +24,7 @@ const BottomBar = ({ defaultHeaders }) => {
     });
     if (!res.ok) {
       const errorData = await res.json();
-      throw new Error(errorData.message || "Login failed");
+      throw new Error(errorData.message || "Upload failed");
     }
     navigate("/input");
   };
