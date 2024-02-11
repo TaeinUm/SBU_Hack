@@ -27,11 +27,10 @@ const BottomBar = ({ defaultHeaders }) => {
     formData.append("file", file);
     console.log(formData.get("file"));
     try {
-      const response = await fetch("/api/receipts/", {
+      const response = await fetch("/api/user/update/", {
         headers: {
           ...defaultHeaders, // Assuming you have existing headers
           "Content-Type": "multipart/form-data",
-          // Add any other headers if needed
         },
         method: "POST",
         body: formData,
