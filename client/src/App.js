@@ -18,7 +18,9 @@ function App({ defaultHeaders }) {
         {isAuthenticated ? (
           <BottomBar defaultHeaders={defaultHeaders} />
         ) : (
-          <></>
+          <div className="footer_container">
+            <i class="bi bi-c-circle" /> &nbsp; ɴᴀᴇɴɢᴊᴀɴɢɢᴏ
+          </div>
         )}
       </div>
     </>

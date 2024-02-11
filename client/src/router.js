@@ -10,11 +10,6 @@ import Register from "./components/login_register/Register.js";
 import InputPage from "./components/input/InputPage.js";
 import Profile from "./components/profile/Profile.js";
 
-// const localUser = localStorage.getItem("user");
-// const userData = JSON.parse(localUser);
-// let isEmpty = userData === null;
-// console.log(userData);
-// console.log(isEmpty);
 const isAuthenticated = localStorage.getItem("isAuthenticated") !== null;
 console.log(isAuthenticated);
 const defaultHeaders = {
