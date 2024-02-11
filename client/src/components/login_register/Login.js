@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/auth.js";
-const Login = ({ defaultHeaders }) => {
+const Login = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
@@ -35,7 +35,7 @@ const Login = ({ defaultHeaders }) => {
     }
 
     const user = await res.json();
-
+    localStorage.setItem("isAuthenticated", true);
     dispatch(setCredentials(user));
     navigate("/main");
   };
