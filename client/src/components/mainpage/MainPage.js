@@ -1,6 +1,10 @@
-import React, { useEffect } from "react";
+import React from "react";
 import "./mainpage.css";
-import Cookies from "js-cookie";
+import { useState, useEffect } from "react";
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../states/LoginState.ts";
+import { useNavigate } from "react-router-dom";
+
 const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
   return (
     <>
@@ -18,96 +22,130 @@ const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
   );
 };
 
-const Checklist = () => {
-  const token = Cookies.get("jwt");
-  console.log(token);
+const MainPage = ({ defaultHeaders }) => {
+  const userDataString = localStorage.getItem("user");
+  const userData = JSON.parse(userDataString);
+  const userId = userData._id;
+  const [items, setItems] = useState([]);
 
-  const items = [
-    {
-      index: "01",
-      product: "Fruit1",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "02",
-      product: "Fruit2",
-      exp_date: "2024/3/23",
-      is_donatable: false,
-    },
-    {
-      index: "03",
-      product: "Fruit3",
-      exp_date: "2024/3/23",
-      is_donatable: false,
-    },
-    {
-      index: "04",
-      product: "Fruit4",
-      exp_date: "2024/3/23",
-      is_donatable: false,
-    },
-    {
-      index: "05",
-      product: "Fruit5",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "06",
-      product: "Fruit6",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "07",
-      product: "Fruit7",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "08",
-      product: "Fruit8",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "09",
-      product: "Fruit9",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "10",
-      product: "Fruit10",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "11",
-      product: "Fruit11",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "12",
-      product: "Fruit12",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "13",
-      product: "Fruit12",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-    {
-      index: "14",
-      product: "Fruit12",
-      exp_date: "2024/3/23",
-      is_donatable: true,
-    },
-  ];
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
+  useEffect(() => {
+    console.log(userData);
+    const fetchItems = async () => {
+      try {
+        const res = await fetch(`/api/users/${userId}/products`, {
+          method: "GET",
+          headers: {
+            ...defaultHeaders,
+            Authorization: `Bearer ${localStorage.getItem("token")}`,
+          },
+        });
+        if (!res.ok) {
+          throw new Error("Failed to fetch items");
+        }
+        const data = await res.json();
+        setItems(data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchItems();
+  }, []);
+  // const items = [
+  //   {
+  //     index: "01",
+  //     product: "Fruit1",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "02",
+  //     product: "Fruit2",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: false,
+  //   },
+  //   {
+  //     index: "03",
+  //     product: "Fruit3",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: false,
+  //   },
+  //   {
+  //     index: "04",
+  //     product: "Fruit4",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: false,
+  //   },
+  //   {
+  //     index: "05",
+  //     product: "Fruit5",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "06",
+  //     product: "Fruit6",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "07",
+  //     product: "Fruit7",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "08",
+  //     product: "Fruit8",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "09",
+  //     product: "Fruit9",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "10",
+  //     product: "Fruit10",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "11",
+  //     product: "Fruit11",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "12",
+  //     product: "Fruit12",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "13",
+  //     product: "Fruit12",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  //   {
+  //     index: "14",
+  //     product: "Fruit12",
+  //     exp_date: "2024/3/23",
+  //     is_donatable: true,
+  //   },
+  // ];
 
   return (
     <div id="checklist">
@@ -124,4 +162,4 @@ const Checklist = () => {
   );
 };
 
-export default Checklist;
+export default MainPage;

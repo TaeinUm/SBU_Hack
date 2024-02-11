@@ -17,22 +17,26 @@ import Ani9 from "../../assets/Lottie/Ani9.json";
 
 import CustomBtn from "./CustomBtn";
 
-const Profile = ({ defaultHeaders }) => {
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
+
+const Profile = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
   const [newPassword, setNewPwd] = useState("");
   const [userData, setUserData] = useState([]);
-  const [updating, setUpdating] = useState(true);
-  const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
-  // Array containing all Lottie animation data
+  const [updating, setUpdating] = useState(false);
+  // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
   const animationData = [Ani1, Ani2, Ani3, Ani4, Ani5, Ani6, Ani7, Ani8, Ani9];
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isLoggedIn) {
       navigate("/");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     fetchUserData();
@@ -59,13 +63,17 @@ const Profile = ({ defaultHeaders }) => {
         throw new Error("Logout failed");
       }
       Cookies.remove("jwt");
+      localStorage.removeItem("isAuthenticated");
       dispatch(logout());
+      setIsLoggedIn(false);
+      navigate("/");
     } catch (error) {
       console.error(error.message);
     }
   };
   const handleUpdateUser = async () => {
     console.log(userData, newPassword);
+
     try {
       const res = await fetch("/api/users/profile", {
         ...defaultHeaders,
@@ -99,7 +107,9 @@ const Profile = ({ defaultHeaders }) => {
       }
 
       Cookies.remove("jwt");
+      localStorage.removeItem("isAuthenticated");
       dispatch(logout());
+      setIsLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.error(error.message);
@@ -163,22 +173,23 @@ const Profile = ({ defaultHeaders }) => {
 
             <div className="updatebtn_container">
               <CustomBtn text={"Cancel"} onClick={() => setUpdating(false)} />
-              {/* <button onClick={() => setUpdating(false)}>Cancel</button> */}
               <CustomBtn text={"Update Info"} onClick={handleUpdateUser} />
-              {/* <button onClick={handleUpdateUser}>Update Info</button> */}
             </div>
           </div>
         ) : (
           <>
             <p className="name-client">
-              Email
+              {userData.username}
               <br />
               <br />
-              <span>email@email.com</span>
+              <span>{userData.email}</span>
             </p>
             <br />
             <div className="updatebtn_container">
-              <CustomBtn text={"Update User Info"} onClick={handleUpdateUser} />
+              <CustomBtn
+                text={"Update User Info"}
+                onClick={() => setUpdating(true)}
+              />
               <CustomBtn text={"Remove Account"} onClick={handleRemoveUser} />
               <CustomBtn text={"Logout"} onClick={handleLogout} />
             </div>

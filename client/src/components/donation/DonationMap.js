@@ -1,18 +1,31 @@
-import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoadingScreen from './LoadingScreen.js';
 import Modal from '../../utils/Modal.js';
 import BankModal from '../../utils/Modal2.js';
+
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
+import { useNavigate } from "react-router-dom";
 
 
 const DonationMap = () => {
     const [userLocation, setUserLocation] = useState({ lat: -34.397, lng: 150.644 });
     const [isLoading, setIsLoading] = useState(true);
     const [foodBanks, setFoodBanks] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+        navigate("/");
+        }
+    }, [isLoggedIn, navigate]);
 
     const foods = [
           {
             index: "01",
-            product: "Fruit1",
+            product: "Crackers",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
@@ -36,61 +49,61 @@ const DonationMap = () => {
           },
           {
             index: "05",
-            product: "Fruit5",
+            product: "Canned Chicken Noodle Soup",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "06",
-            product: "Fruit6",
+            product: "Spam",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "07",
-            product: "Fruit7",
+            product: "Mixed Vegitables",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "08",
-            product: "Fruit8",
+            product: "Sweet peas",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "09",
-            product: "Fruit9",
+            product: "Beefaroni",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "10",
-            product: "Fruit10",
+            product: "Sliced Carrots",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "11",
-            product: "Fruit11",
+            product: "Chiken of the Sea",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "12",
-            product: "Fruit12",
+            product: "StarKist",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "13",
-            product: "Fruit12",
+            product: "Diced Potatos",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
           {
             index: "14",
-            product: "Fruit12",
+            product: "Whole Kernel Corn",
             exp_date: "2024/3/23",
             is_donatable: true,
           },
