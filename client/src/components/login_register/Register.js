@@ -4,9 +4,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/auth.js";
 import "./register.css";
-import { useRecoilState } from 'recoil';
-import { LoginState } from '../../states/LoginState.ts';
-
+import { useRecoilState } from "recoil";
+import { LoginState } from "../../states/LoginState.ts";
+import Lottie from "lottie-react";
+import RegisterAnimation from "../../assets/Lottie/RegisterAnimation.json";
 const Register = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,56 +65,64 @@ const Register = ({ defaultHeaders, isAuthenticated }) => {
     navigate("/main");
   };
   return (
-    <form className="register_form" onSubmit={handleRegister}>
-      <div className="register_title">
-        Sign Up <br />
-        <span>Just one step away from making a differnce,</span>
+    <div>
+      <div style={{ textAlign: "-webkit-center" }}>
+        <Lottie
+          animationData={RegisterAnimation}
+          style={{ height: "10rem", width: "10rem" }}
+        />
       </div>
-      <input
-        className="register_input"
-        name="username"
-        placeholder="Username"
-        type="text"
-        onChange={handleUsernameInput}
-        autoComplete="off"
-        required
-      />
-      <input
-        className="register_input"
-        name="email"
-        placeholder="Email"
-        type="email"
-        onChange={handleEmailInput}
-        autoComplete="off"
-        required
-      />
-      <input
-        className="register_input"
-        name="password"
-        placeholder="Password"
-        type="password"
-        onChange={handlePwdInput}
-        autoComplete="off"
-        required
-      />
-      <input
-        className="register_input"
-        name="password"
-        placeholder="Confirm Password"
-        type="password"
-        autoComplete="off"
-        required
-        onChange={(e) => setConfirmPwd(e.target.value)}
-      />
-
-      <div className="register-additional">
-        <div onClick={() => navigate("/")}>
-          <em>Already Have an Account?</em>
+      <form className="register_form" onSubmit={handleRegister}>
+        <div className="register_title">
+          Sign Up <br />
+          <span>Just one step away from making a differnce,</span>
         </div>
-      </div>
-      {errMsg && <div className="error-msg">{errMsg}</div>}
-      <button className="register-btn">Sign Up</button>
-    </form>
+        <input
+          className="register_input"
+          name="username"
+          placeholder="Username"
+          type="text"
+          onChange={handleUsernameInput}
+          autoComplete="off"
+          required
+        />
+        <input
+          className="register_input"
+          name="email"
+          placeholder="Email"
+          type="email"
+          onChange={handleEmailInput}
+          autoComplete="off"
+          required
+        />
+        <input
+          className="register_input"
+          name="password"
+          placeholder="Password"
+          type="password"
+          onChange={handlePwdInput}
+          autoComplete="off"
+          required
+        />
+        <input
+          className="register_input"
+          name="password"
+          placeholder="Confirm Password"
+          type="password"
+          autoComplete="off"
+          required
+          onChange={(e) => setConfirmPwd(e.target.value)}
+        />
+
+        <div className="register-additional">
+          <div onClick={() => navigate("/")}>
+            <em>Already Have an Account?</em>
+          </div>
+        </div>
+        {errMsg && <div className="error-msg">{errMsg}</div>}
+        <button className="register-btn">Sign Up</button>
+      </form>
+    </div>
   );
 };
 
