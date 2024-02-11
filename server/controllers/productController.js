@@ -59,7 +59,7 @@ export const deleteProduct = async (req, res) => {
 // Get all the products
 export const getUserProducts = async (req, res) => {
     try {
-        const userId = req.params.userId; // Or however you're passing the user's ID
+        const userId = req.params.userId;
         const user = await User.findById(userId).exec();
 
         if (!user) {
