@@ -27,6 +27,7 @@ app.use(urlencoded({ extended: true }));
 app.use(cookieParser());
 
 // Serve static files from the React app
+const __dirname = path.dirname(new URL(import.meta.url).pathname);
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 // The "catchall" handler: for any request that doesn't
