@@ -10,7 +10,7 @@ import { uploadSingleImage } from "../utils/s3upload.js"; // Import the upload u
 // New function to upload image
 export const uploadReceiptImage = async (req, res) => {
   const userId = req.user._id; // Ensure this is provided by your auth middleware
-  const file = req; // Provided by multer-s3
+  const file = req.file; // Provided by multer-s3
   if (!file) {
     return res.status(400).json({ message: "No file uploaded!" });
   }
