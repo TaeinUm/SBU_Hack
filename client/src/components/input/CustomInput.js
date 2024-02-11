@@ -7,11 +7,14 @@ const CustomInput = ({
   isDonatable,
   onInputChange,
   onCheckboxChange,
+  onDateChange,
 }) => {
   const handleInputChange = (event) => {
     onInputChange(index, event.target.value);
   };
-
+  const handleDateChange = (event) => {
+    onDateChange(index, event.target.value); // Call onDateChange when date changes
+  };
   const handleCheckboxChange = (event) => {
     onCheckboxChange(index, event.target.checked);
   };
@@ -26,10 +29,11 @@ const CustomInput = ({
         onChange={handleInputChange}
       />
       <input
-        placeholder="Exp Date"
-        className="input"
+        className="input exp_date_input"
         name="exp_date"
-        type="text"
+        type="date"
+        onChange={handleDateChange}
+        style={{ width: "8rem" }}
       />
       <div className="checkbox-wrapper-10">
         <input
