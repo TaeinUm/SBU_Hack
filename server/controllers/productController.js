@@ -55,3 +55,21 @@ export const deleteProduct = async (req, res) => {
         res.status(400).json({ message: error.message });
     }
 };
+
+// Get all the products
+export const getUserProducts = async (req, res) => {
+    try {
+        const userId = req.params.userId; // Or however you're passing the user's ID
+        const user = await User.findById(userId).exec();
+
+        if (!user) {
+        return res.status(404).json({ message: "User not found" });
+        }
+
+        // Respond with the user's products
+        res.status(200).json(user.products);
+    } catch (error) {
+        console.error(error);
+        res.status(500).json({ message: "Error retrieving user's products", error: error.message });
+    }
+};
