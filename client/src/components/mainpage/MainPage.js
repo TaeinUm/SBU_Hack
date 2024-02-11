@@ -4,20 +4,22 @@ import { useState, useEffect } from "react";
 import { useRecoilState } from "recoil";
 import { LoginState } from "../../states/LoginState.ts";
 import { useNavigate } from "react-router-dom";
+import Lottie from "lottie-react";
+import NoDataIndicator from "../../assets/Lottie/NoDataIndicator.json";
 
-const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
+const NonDonatableItem = ({ index, product, exp_date, is_donatable }) => {
   return (
     <>
-      <input
-        value={product}
-        name="data"
-        type="checkbox"
-        id={index}
-        className=""
-      />
-      <label htmlFor={index}>{`${product} : ${exp_date} \u00A0\u00A0 ${
-        is_donatable ? "O" : "X"
-      }`}</label>
+      <input value={product} name="data" type="checkbox" id={index} />
+      <label htmlFor={index}>{`${product} : ${exp_date} `}</label>
+    </>
+  );
+};
+const DonatableItem = ({ index, product, exp_date, is_donatable }) => {
+  return (
+    <>
+      <input value={product} name="data" type="checkbox" id={index} />
+      <label htmlFor={index}>{`${product} : ${exp_date} `}</label>
     </>
   );
 };
@@ -59,104 +61,57 @@ const MainPage = ({ defaultHeaders }) => {
     };
     fetchItems();
   }, []);
-  // const items = [
-  //   {
-  //     index: "01",
-  //     product: "Fruit1",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "02",
-  //     product: "Fruit2",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: false,
-  //   },
-  //   {
-  //     index: "03",
-  //     product: "Fruit3",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: false,
-  //   },
-  //   {
-  //     index: "04",
-  //     product: "Fruit4",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: false,
-  //   },
-  //   {
-  //     index: "05",
-  //     product: "Fruit5",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "06",
-  //     product: "Fruit6",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "07",
-  //     product: "Fruit7",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "08",
-  //     product: "Fruit8",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "09",
-  //     product: "Fruit9",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "10",
-  //     product: "Fruit10",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "11",
-  //     product: "Fruit11",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "12",
-  //     product: "Fruit12",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "13",
-  //     product: "Fruit12",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  //   {
-  //     index: "14",
-  //     product: "Fruit12",
-  //     exp_date: "2024/3/23",
-  //     is_donatable: true,
-  //   },
-  // ];
 
   return (
-    <div id="checklist">
-      {items.map((item) => (
-        <CheckboxItem
-          key={item.index}
-          index={item.index}
-          product={item.productName}
-          exp_date={item.expdate}
-          is_donatable={item.donatable}
-        />
-      ))}
+    <div>
+      {items.length === 0 ? (
+        <div className="mainpage_container">
+          <div className="mainpage_desc">
+            You currently <strong>do not</strong> have any products bought.
+            <br />
+            <br />
+            <span>Click the camera icon</span> below, <br /> to scan or upload a
+            reciept!
+          </div>
+          <Lottie
+            style={{ width: "15rem", height: "15rem" }}
+            animationData={NoDataIndicator}
+          />
+        </div>
+      ) : (
+        <>
+          <div className="checklist_title">Products Donatable</div>
+          <div className="checklist donatable_container">
+            {items.map(
+              (item) =>
+                item.donatable && (
+                  <DonatableItem
+                    key={item.index}
+                    index={item.index}
+                    product={item.productName}
+                    exp_date={item.expdate}
+                    is_donatable={item.donatable}
+                  />
+                )
+            )}
+          </div>
+          <div className="checklist_title">Non-Donatable Item</div>
+          <div className="checklist non_donatable_container">
+            {items.map(
+              (item) =>
+                !item.donatable && (
+                  <NonDonatableItem
+                    key={item.index}
+                    index={item.index}
+                    product={item.productName}
+                    exp_date={item.expdate}
+                    is_donatable={item.donatable}
+                  />
+                )
+            )}
+          </div>
+        </>
+      )}
     </div>
   );
 };

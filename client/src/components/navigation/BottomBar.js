@@ -2,11 +2,9 @@ import React, { useState } from "react";
 import "./navbar.css";
 import { useNavigate } from "react-router-dom";
 
-
-
 const BottomBar = ({ defaultHeaders }) => {
   const navigate = useNavigate();
-  const [activeIcon, setActiveIcon] = useState("");
+  const [activeIcon, setActiveIcon] = useState("house");
   const [file, setFile] = useState(null);
 
   const handleIconClick = (iconName) => {
@@ -50,20 +48,18 @@ const BottomBar = ({ defaultHeaders }) => {
   };
 
   const UploadBtn = () => {
-    return(
+    return (
       <div className="uploadBtn_container">
         <button className="uploadBtn" onClick={handleSubmit}>
-          <span className="uploadBtn_top"> 
-            Upload
-          </span>
+          <span className="uploadBtn_top">Upload</span>
         </button>
       </div>
     );
-  }
+  };
 
   return (
     <>
-      {file ? <UploadBtn/> : <></>}
+      {file ? <UploadBtn /> : <></>}
       <div className="navigation-card">
         {/* First icon */}
         <div
