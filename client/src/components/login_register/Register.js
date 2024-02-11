@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/auth.js";
 import "./register.css";
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
 
 const Register = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
@@ -14,6 +16,13 @@ const Register = ({ defaultHeaders, isAuthenticated }) => {
   const [password, setPwd] = useState("");
   const [confirmPassword, setConfirmPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/main");
+    }
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     setErrMsg("");
@@ -51,6 +60,7 @@ const Register = ({ defaultHeaders, isAuthenticated }) => {
     const user = await res.json();
     console.log(user);
     dispatch(setCredentials(user));
+    setIsLoggedIn(true);
     navigate("/main");
   };
   return (

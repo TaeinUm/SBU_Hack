@@ -1,6 +1,9 @@
 import React from "react";
 import "./mainpage.css";
 import { useState, useEffect } from "react";
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
+import { useNavigate } from "react-router-dom";
 
 const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
   return (
@@ -22,6 +25,16 @@ const CheckboxItem = ({ index, product, exp_date, is_donatable }) => {
 const MainPage = () => {
   const [auth, setAuth] = useState(false);
   const isAuthenticated = localStorage.getItem("isAuthenticated") !== null;
+
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
 
   const items = [
     {

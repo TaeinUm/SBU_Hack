@@ -17,6 +17,9 @@ import Ani9 from "../../assets/Lottie/Ani9.json";
 
 import CustomBtn from "./CustomBtn";
 
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
+
 const Profile = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,14 +28,15 @@ const Profile = ({ defaultHeaders, isAuthenticated }) => {
   const [userData, setUserData] = useState([]);
   const [updating, setUpdating] = useState(false);
   // const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
 
   const animationData = [Ani1, Ani2, Ani3, Ani4, Ani5, Ani6, Ani7, Ani8, Ani9];
 
   useEffect(() => {
-    if (!isAuthenticated) {
+    if (!isLoggedIn) {
       navigate("/");
     }
-  }, [isAuthenticated, navigate]);
+  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     fetchUserData();
@@ -61,6 +65,7 @@ const Profile = ({ defaultHeaders, isAuthenticated }) => {
       Cookies.remove("jwt");
       localStorage.removeItem("isAuthenticated");
       dispatch(logout());
+      setIsLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.error(error.message);
@@ -104,6 +109,7 @@ const Profile = ({ defaultHeaders, isAuthenticated }) => {
       Cookies.remove("jwt");
       localStorage.removeItem("isAuthenticated");
       dispatch(logout());
+      setIsLoggedIn(false);
       navigate("/");
     } catch (error) {
       console.error(error.message);

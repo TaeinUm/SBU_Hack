@@ -3,9 +3,12 @@ import { Outlet } from "react-router-dom";
 import TopBar from "./components/navigation/TopBar";
 import BottomBar from "./components/navigation/BottomBar";
 import { useEffect, useState } from "react";
+import { useRecoilState } from 'recoil';
+import { LoginState } from './states/LoginState.ts';
 
 function App({ defaultHeaders }) {
-  // const [isLoading, setIsLoading] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
 
   const isAuthenticated = localStorage.getItem("isAuthenticated") !== null;
   return (
@@ -15,7 +18,7 @@ function App({ defaultHeaders }) {
         <div className="app_content">
           <Outlet />
         </div>
-        {isAuthenticated ? (
+        {isLoggedIn ? (
           <BottomBar defaultHeaders={defaultHeaders} />
         ) : (
           <></>

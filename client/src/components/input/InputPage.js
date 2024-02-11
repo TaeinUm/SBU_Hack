@@ -1,9 +1,23 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "./inputpage.css";
 import CustomInput from "./CustomInput";
 import CustomBtn from "../profile/CustomBtn";
+import { useNavigate } from "react-router-dom";
+
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
 
 const InputPage = ({ isAuthenticated }) => {
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    if (!isLoggedIn) {
+      navigate("/");
+    }
+  }, [isLoggedIn, navigate]);
+
   const [items, setItems] = useState([
     {
       index: "01",

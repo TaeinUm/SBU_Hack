@@ -6,6 +6,11 @@ import { useNavigate } from "react-router-dom";
 import { useRef, useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
 import { setCredentials } from "../../store/auth.js";
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
+
+
+
 const Login = ({ defaultHeaders, isAuthenticated }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -13,6 +18,15 @@ const Login = ({ defaultHeaders, isAuthenticated }) => {
   const [email, setEmail] = useState("");
   const [password, setPwd] = useState("");
   const [errMsg, setErrMsg] = useState("");
+
+  const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      navigate("/main");
+    }
+  }, [isLoggedIn, navigate]);
+
 
   const handleEmailInput = (e) => {
     setEmail(e.target.value);
@@ -37,8 +51,10 @@ const Login = ({ defaultHeaders, isAuthenticated }) => {
     const user = await res.json();
     localStorage.setItem("isAuthenticated", true);
     dispatch(setCredentials(user));
+    setIsLoggedIn(true);
     navigate("/main");
   };
+
   return (
     <div className="login_container">
       <form className="login_form" onSubmit={handleLogin}>

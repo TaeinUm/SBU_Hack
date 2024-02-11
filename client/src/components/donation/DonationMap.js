@@ -1,13 +1,26 @@
-import React, { useEffect, useState, useMemo, useRef, useCallback } from 'react';
+import React, { useEffect, useState } from 'react';
 import LoadingScreen from './LoadingScreen.js';
 import Modal from '../../utils/Modal.js';
 import BankModal from '../../utils/Modal2.js';
+
+import { useRecoilState } from 'recoil';
+import { LoginState } from '../../states/LoginState.ts';
+import { useNavigate } from "react-router-dom";
 
 
 const DonationMap = () => {
     const [userLocation, setUserLocation] = useState({ lat: -34.397, lng: 150.644 });
     const [isLoading, setIsLoading] = useState(true);
     const [foodBanks, setFoodBanks] = useState([]);
+    const [isLoggedIn, setIsLoggedIn] = useRecoilState(LoginState);
+
+    const navigate = useNavigate();
+
+    useEffect(() => {
+        if (!isLoggedIn) {
+        navigate("/");
+        }
+    }, [isLoggedIn, navigate]);
 
     const foods = [
           {
